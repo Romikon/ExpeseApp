@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/expense-app/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/expense-app/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/expense-app",
+  "projects": {
+    "expense-app": {
+      "type": "application",
+      "root": "apps/expense-app",
+      "entryFile": "main",
+      "sourceRoot": "apps/expense-app/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/expense-app/tsconfig.app.json"
+      }
+    },
+    "expense-user": {
+      "type": "application",
+      "root": "apps/expense-user",
+      "entryFile": "main",
+      "sourceRoot": "apps/expense-user/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/expense-user/tsconfig.app.json"
+      }
+    }
+  }
+}

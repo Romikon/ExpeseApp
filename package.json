@@ -1,0 +1,28 @@
+{
+  "name": "expenseapp",
+  "version": "1.0.0",
+  "description": "<p align=\"center\">   <a href=\"http://nestjs.com/\" target=\"blank\"><img src=\"https://nestjs.com/img/logo-small.svg\" width=\"120\" alt=\"Nest Logo\" /></a> </p>",
+  "main": ".eslintrc.js",
+  "workspaces": [
+    "apps/expense-transaction",
+    "apps/expense-budget",
+    "apps/expense-category",
+    "apps/expense-user"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:all": "concurrently \"npm run start --workspace=apps/expense-transaction\" \"npm run start --workspace=apps/expense-budget\" \"npm run start --workspace=apps/expense-category\" \"npm run start --workspace=apps/expense-user\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.1.1"
+  },
+  "dependencies": {
+    "@nestjs/config": "^3.3.0",
+    "pg": "^8.13.1",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.20"
+  }
+}
