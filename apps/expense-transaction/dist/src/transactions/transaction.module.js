@@ -12,18 +12,21 @@ const typeorm_1 = require("@nestjs/typeorm");
 const transaction_service_1 = require("./transaction.service");
 const transaction_entity_1 = require("./transaction.entity");
 const transaction_controller_1 = require("./transaction.controller");
+const dotenv = require("dotenv");
+dotenv.config();
 let TransactionModule = class TransactionModule {
 };
 exports.TransactionModule = TransactionModule;
 exports.TransactionModule = TransactionModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forRoot({
+        imports: [
+            typeorm_1.TypeOrmModule.forRoot({
                 type: 'postgres',
-                host: 'localhost',
-                port: 5432,
-                username: 'roman1',
-                password: '123123',
-                database: 'budget',
+                host: process.env.DB_HOST,
+                port: parseInt(process.env.DB_PORT),
+                username: process.env.DB_USERNAME,
+                password: process.env.DB_PASSWORD,
+                database: process.env.DB_DATABASENAME,
                 entities: [transaction_entity_1.ITransaction],
                 synchronize: true,
             }),
