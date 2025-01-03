@@ -60,6 +60,6 @@ export class CategoryService {
   }
 
   deleteCategory(id: number){
-    this.transactionReposetory.delete(id)
+    this.transactionReposetory.delete(id);
   }
 }
