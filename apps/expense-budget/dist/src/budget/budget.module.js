@@ -25,7 +25,7 @@ exports.BudgetModule = BudgetModule = __decorate([
                 host: process.env.DB_HOST,
                 port: parseInt(process.env.DB_PORT),
                 username: process.env.DB_USERNAME,
-                password: process.env.DB_PASSWORD,
+                password: process.env.DB_PASSWORD.toString(),
                 database: process.env.DB_DATABASENAME,
                 entities: [budget_entity_1.IBudget, budget_entity_1.IUpdateBudget],
                 synchronize: true,
