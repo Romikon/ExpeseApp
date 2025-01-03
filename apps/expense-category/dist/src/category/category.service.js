@@ -31,7 +31,6 @@ let CategoryService = class CategoryService {
         this.channel.consume(this.queue, async (msg) => {
             const data = JSON.parse(msg.content.toString());
             let description;
-            console.log(data.type);
             if (data.type == 'income') {
                 description = `income was received in the amount ${data.sum} of ${data.activity} category`;
             }
@@ -43,6 +42,7 @@ let CategoryService = class CategoryService {
                 type: data.type,
                 description: description
             });
+            this.channel.ack(msg);
             return this.transactionReposetory.save(createdInfo);
         });
     }

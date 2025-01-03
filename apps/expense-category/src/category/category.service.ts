@@ -26,8 +26,6 @@ export class CategoryService {
       
       let description
 
-      console.log(data.type)
-
       if(data.type == 'income'){
         description = `income was received in the amount ${data.sum} of ${data.activity} category`
       }
@@ -40,6 +38,8 @@ export class CategoryService {
         type: data.type,
         description: description
       });
+
+      this.channel.ack(msg);
 
       return this.transactionReposetory.save(createdInfo)
     });
