@@ -44,6 +44,6 @@ export class TransactionService {
   }
 
   deleteTransaction(id: number){
-    this.transactionReposetory.delete(id)
+    return this.transactionReposetory.delete(id)
   }
 }

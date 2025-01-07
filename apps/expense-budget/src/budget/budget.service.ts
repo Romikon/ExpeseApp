@@ -30,6 +30,6 @@ export class BudgetService {
   }
 
   deleteBudet(id: number){
-    this.budgetRepository.delete(id)
+    return this.budgetRepository.delete(id)
   }
 }

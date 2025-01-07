@@ -17,11 +17,11 @@ export class TransactionController {
 
   @Put(':id')
   updateTransaction(@Param('id') id: number, @Body('budgetid') budgetid: number, @Body('categoryid') categoryid: number, @Body('type') type: string, @Body('sum') sum: number, @Body('activity') activity: string){
-    this.transactionService.updateTransaction(id, categoryid, budgetid, type, sum, activity)
+    return this.transactionService.updateTransaction(id, categoryid, budgetid, type, sum, activity)
   }
 
   @Delete(':id')
   deleteTransaction(@Param('id') id: number){
-    this.transactionService.deleteTransaction(id)
+    return this.transactionService.deleteTransaction(id)
   }
 }

@@ -17,11 +17,11 @@ export class CategoryController {
 
   @Put(':id')
   updateCategory(@Param('id') id: number, @Body('name') name: string, @Body('type') type: string, @Body('description') description: string){
-    this.transactionService.updateCategory(id, name, type, description)
+    return this.transactionService.updateCategory(id, name, type, description)
   }
 
   @Delete(':id')
   deleteCategory(@Param('id') id: number){
-    this.transactionService.deleteCategory(id)
+    return this.transactionService.deleteCategory(id)
   }
 }

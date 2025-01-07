@@ -17,11 +17,11 @@ export class AppController {
 
   @Put(':id')
   updateBudget(@Param('id') id: number, @Body('name') name: string, @Body('currency') currency: string){
-    this.budgetService.updateBudget(id, name, currency)
+    return this.budgetService.updateBudget(id, name, currency)
   }
 
   @Delete(':id')
   deleteBudget(@Param('id') id: number){
-    this.budgetService.deleteBudet(id)
+    return this.budgetService.deleteBudet(id)
   }
 }
