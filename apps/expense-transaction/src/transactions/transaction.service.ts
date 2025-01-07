@@ -22,9 +22,9 @@ export class TransactionService {
   }
 
   async sendMessage(message: any) {
+    await this.connect()
     const messageBuffer = Buffer.from(JSON.stringify(message));
     this.channel.sendToQueue(this.queue, messageBuffer);
-    console.log(message)
   }
 
   getTransactions(){
