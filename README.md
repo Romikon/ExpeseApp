@@ -24,19 +24,34 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Welcome to my project Expenses. On this git repository, you can take a look at the source code of the program
 
 ## Project setup
 
 ```bash
 $ npm install
+$ cd apps/expense-budget
+$ npm install
+$ cd ..
+$ cd apps/expense-category
+$ npm install
+$ cd ..
+$ cd apps/expense-transaction
+$ npm install
+$ cd ..
+$ cd apps/expense-user
+$ npm install
+$ cd ..
 ```
 
 ## Compile and run the project
 
 ```bash
-# development
-$ npm run start
+# To run all the services
+$ npm run start:all
+
+# To run services separatly
+$ npm run start:<service name>
 
 # watch mode
 $ npm run start:dev
