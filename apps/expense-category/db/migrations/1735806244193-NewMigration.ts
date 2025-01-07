@@ -10,7 +10,8 @@ export class NewMigration1735806244193 implements MigrationInterface {
         name varchar(255) NOT NULL,
         type varchar(255) NOT NULL,
         description varchar(255) NOT NULL,
-        created_at timestamp DEFAULT CURRENT_TIMESTAMP NULL,
+        created_at timestamp DEFAULT CURRENT_TIMESTAMP,
+        updated_at timestamp DEFAULT CURRENT_TIMESTAMP,
         CONSTRAINT category_key PRIMARY KEY (id)
 )`);
     }

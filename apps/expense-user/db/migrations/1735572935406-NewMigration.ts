@@ -5,13 +5,14 @@ export class NewMigration1735572935406 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
-    CREATE TABLE "users"."users" (
-    id serial4 NOT NULL,
-    name varchar(255) NOT NULL,
-    email varchar(255) NOT NULL,
-    password varchar(255) NOT NULL,
-    created_at timestamp DEFAULT CURRENT_TIMESTAMP NULL,
-    CONSTRAINT users_key PRIMARY KEY (id)
+        CREATE TABLE "users"."users" (
+        id serial4 NOT NULL,
+        name varchar(255) NOT NULL,
+        email varchar(255) NOT NULL,
+        password varchar(255) NOT NULL,
+        created_at timestamp DEFAULT CURRENT_TIMESTAMP,
+        updated_at timestamp DEFAULT CURRENT_TIMESTAMP,
+        CONSTRAINT users_key PRIMARY KEY (id)
 )`);
     }
 

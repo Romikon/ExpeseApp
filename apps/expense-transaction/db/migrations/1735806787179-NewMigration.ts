@@ -11,7 +11,8 @@ export class NewMigration1735806787179 implements MigrationInterface {
         categoryid integer NOT NULL,
         type varchar(255) NOT NULL,
         sum integer NOT NULL,
-        created_at timestamp DEFAULT CURRENT_TIMESTAMP NULL,
+        created_at timestamp DEFAULT CURRENT_TIMESTAMP,
+        updated_at timestamp DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (id),
         FOREIGN KEY (budgetid) REFERENCES budget.budget(id) ON DELETE CASCADE
 )`);

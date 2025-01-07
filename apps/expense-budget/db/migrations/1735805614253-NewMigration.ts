@@ -10,6 +10,8 @@ export class NewMigration1735805614253 implements MigrationInterface {
             name varchar NULL,
             currency varchar NULL,
             month varchar NULL,
+            created_at timestamp DEFAULT CURRENT_TIMESTAMP,
+            updated_at timestamp DEFAULT CURRENT_TIMESTAMP,
             CONSTRAINT budget_key PRIMARY KEY (id)
 )`);
     }
