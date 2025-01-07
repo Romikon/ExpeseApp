@@ -14,15 +14,3 @@ export class IBudget {
   @Column({ nullable: true })
   month: string;
 }
-
-@Entity({ schema: 'budget', name: 'budget' })
-export class IUpdateBudget {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column({ nullable: true })
-  name: string;
-
-  @Column({ nullable: true })
-  currency: string;
-}

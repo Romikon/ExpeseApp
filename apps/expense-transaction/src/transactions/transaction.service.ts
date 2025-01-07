@@ -39,8 +39,10 @@ export class TransactionService {
     return this.transactionReposetory.save(transaction)
   }
 
-  updateTransaction(id: number, budgetid: number, categoryid: number, type: string, sum: number, activity: string){
-    return this.transactionReposetory.update(id, {budgetid, categoryid, type, sum, activity})
+  async updateTransaction(id: number, budgetid: number, categoryid: number, type: string, sum: number, activity: string){
+    await this.transactionReposetory.update(id, {budgetid, categoryid, type, sum, activity})
+
+    return this.transactionReposetory.findOne({ where: { id: id }})
   }
 
   deleteTransaction(id: number){

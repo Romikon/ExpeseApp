@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { IBudget, IUpdateBudget } from './budget.entity';
+import { IBudget } from './budget.entity';
 import { BudgetService } from './budget.service';
 import { AppController } from './budget.controller';
 import * as dotenv from 'dotenv';
@@ -16,10 +16,10 @@ dotenv.config();
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD.toString(),
       database: process.env.DB_DATABASENAME,
-      entities: [IBudget, IUpdateBudget],
+      entities: [IBudget],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([IBudget, IUpdateBudget]),
+    TypeOrmModule.forFeature([IBudget]),
   ],
   controllers: [AppController],
   providers: [BudgetService],

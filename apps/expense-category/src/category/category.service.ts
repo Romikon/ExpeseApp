@@ -13,7 +13,7 @@ export class CategoryService {
 
   constructor(
     @InjectRepository(ICategory)
-    private transactionReposetory: Repository<ICategory>
+    private categoryReposetory: Repository<ICategory>
   ) {}
 
   async onModuleInit() {
@@ -33,7 +33,7 @@ export class CategoryService {
         description = `expenses in the amount of ${data.sum} of ${data.activity} category`
       }
 
-      const createdInfo = this.transactionReposetory.create({
+      const createdInfo = this.categoryReposetory.create({
         name: data.activity,
         type: data.type,
         description: description
@@ -41,25 +41,27 @@ export class CategoryService {
 
       this.channel.ack(msg);
 
-      return this.transactionReposetory.save(createdInfo)
+      return this.categoryReposetory.save(createdInfo)
     });
   }
 
   getCategories(){
-    return this.transactionReposetory.find();
+    return this.categoryReposetory.find();
   }
 
   createCategory(name: string, type: string, description: string){
-    const transaction = this.transactionReposetory.create({name, type, description})
+    const transaction = this.categoryReposetory.create({name, type, description})
 
-    return this.transactionReposetory.save(transaction)
+    return this.categoryReposetory.save(transaction)
   }
 
-  updateCategory(id: number, name: string, type: string, description: string){
-    return this.transactionReposetory.update(id, {name, type, description})
+  async updateCategory(id: number, name: string, type: string, description: string){
+    await this.categoryReposetory.update(id, {name, type, description})
+
+    return this.categoryReposetory.findOne({ where: { id: id }})
   }
 
   deleteCategory(id: number){
-    return this.transactionReposetory.delete(id);
+    return this.categoryReposetory.delete(id);
   }
 }

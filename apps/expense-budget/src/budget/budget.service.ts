@@ -1,15 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { IBudget, IUpdateBudget } from './budget.entity';
+import { IBudget } from './budget.entity';
 
 @Injectable()
 export class BudgetService {
   constructor(
     @InjectRepository(IBudget)
     private budgetRepository: Repository<IBudget>,
-    @InjectRepository(IUpdateBudget)
-    private budgetUpdateRepository: Repository<IUpdateBudget>
   ) {}
 
   getBudgets(){
@@ -25,8 +23,10 @@ export class BudgetService {
     return this.budgetRepository.save(budget)
   }
 
-  updateBudget(id: number, name: string, currency: string){
-    return this.budgetUpdateRepository.update(id, {name, currency})
+  async updateBudget(id: number, name: string, currency: string){
+    await this.budgetRepository.update(id, {name, currency})
+
+    return this.budgetRepository.findOne({where: { id: id }})
   }
 
   deleteBudet(id: number){

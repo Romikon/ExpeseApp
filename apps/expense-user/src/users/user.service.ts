@@ -20,8 +20,10 @@ export class UserService {
     return this.userRepository.save(newUser);
   }
 
-  updateUser(id: number, name?: string, email?: string, password?: string) {
-    return this.userRepository.update(id, { name, email, password });
+  async updateUser(id: number, name?: string, email?: string, password?: string) {
+    await this.userRepository.update(id, { name, email, password });
+
+    return this.userRepository.findOne({ where: { id: id }})
   }
 
   deleteUser(id: number){
