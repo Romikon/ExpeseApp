@@ -4,6 +4,7 @@ import { TransactionService } from './transaction.service';
 import { ITransaction } from './transaction.entity';
 import { TransactionController } from './transaction.controller';
 import * as dotenv from 'dotenv';
+import { CloudAMQP } from 'src/amqp/amqp';
 
 dotenv.config();
 
@@ -22,6 +23,6 @@ dotenv.config();
   TypeOrmModule.forFeature([ITransaction]),
   ],
   controllers: [TransactionController],
-  providers: [TransactionService],
+  providers: [TransactionService, CloudAMQP],
 })
 export class TransactionModule {}

@@ -4,6 +4,7 @@ import { ICategory } from './category.entity';
 import { CategoryController } from './category.controller';
 import { CategoryService } from './category.service';
 import * as dotenv from 'dotenv';
+import { CloudAMQP } from 'src/amqp/amqp';
 
 dotenv.config();
 
@@ -22,6 +23,6 @@ dotenv.config();
   TypeOrmModule.forFeature([ICategory]),    
   ],
   controllers: [CategoryController],
-  providers: [CategoryService],
+  providers: [CategoryService, CloudAMQP],
 })
 export class CategoryModule {}
