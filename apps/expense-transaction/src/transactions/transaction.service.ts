@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ITransaction } from './transaction.entity';
 import { Repository } from 'typeorm';
 import * as amqp from 'amqplib';
+import { TransactionDTO } from 'src/dto/dto';
 
 @Injectable()
 export class TransactionService {
@@ -31,7 +32,8 @@ export class TransactionService {
     return this.transactionReposetory.find();
   }
 
-  async createTransaction(budgetid: number, categoryid: number, type: string, sum: number, activity: string){
+  async createTransaction(newTransaction: TransactionDTO){
+    const { budgetid, categoryid, type, sum, activity } = newTransaction
     const transaction = await this.transactionReposetory.create({ budgetid, categoryid, type, sum, activity })
 
     await this.sendMessage({ type: type, sum: sum, activity: activity })
@@ -39,8 +41,9 @@ export class TransactionService {
     return this.transactionReposetory.save(transaction)
   }
 
-  async updateTransaction(id: number, budgetid: number, categoryid: number, type: string, sum: number, activity: string){
-    await this.transactionReposetory.update(id, {budgetid, categoryid, type, sum, activity})
+  async updateTransaction(id: number, updateTransaction: TransactionDTO){
+    const {budgetid, categoryid, type, sum, activity} = updateTransaction
+    await this.transactionReposetory.update(id, { budgetid, categoryid, type, sum, activity })
 
     return this.transactionReposetory.findOne({ where: { id: id }})
   }

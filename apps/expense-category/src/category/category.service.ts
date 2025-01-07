@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ICategory } from './category.entity';
 import { Repository } from 'typeorm';
 import * as amqp from 'amqplib';
+import { CategoryDTO } from 'src/dto/dto';
 
 @Injectable()
 export class CategoryService {
@@ -49,13 +50,15 @@ export class CategoryService {
     return this.categoryReposetory.find();
   }
 
-  createCategory(name: string, type: string, description: string){
-    const transaction = this.categoryReposetory.create({name, type, description})
+  createCategory(newCategory: CategoryDTO){
+    const { name, type, description } = newCategory
+    const transaction = this.categoryReposetory.create({ name, type, description })
 
     return this.categoryReposetory.save(transaction)
   }
 
-  async updateCategory(id: number, name: string, type: string, description: string){
+  async updateCategory(id: number, updateCategory: CategoryDTO){
+    const { name, type, description } = updateCategory
     await this.categoryReposetory.update(id, {name, type, description})
 
     return this.categoryReposetory.findOne({ where: { id: id }})
