@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
 import { BudgetService } from './budget.service';
 
 @Controller('budget')
-export class AppController {
+export class BudgetController {
   constructor(private readonly budgetService: BudgetService) {}
 
   @Get()

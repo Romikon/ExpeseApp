@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { IBudget } from './budget.entity';
 import { BudgetService } from './budget.service';
-import { AppController } from './budget.controller';
+import { BudgetController } from './budget.controller';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -21,7 +21,7 @@ dotenv.config();
     }),
     TypeOrmModule.forFeature([IBudget]),
   ],
-  controllers: [AppController],
+  controllers: [BudgetController],
   providers: [BudgetService],
 })
 export class BudgetModule {}
