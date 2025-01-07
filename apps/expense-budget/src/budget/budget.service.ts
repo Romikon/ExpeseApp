@@ -18,7 +18,7 @@ export class BudgetService {
   async createBudget(newBudget: BudgetDTO){
 
     const { name, currency } = newBudget
-    const month = new Date().toLocaleString('default', { month: 'long' });
+    const month = new Date().toLocaleString('en-US', { month: 'long' });
 
     const budget = await this.budgetRepository.create({ name, currency, month})
 

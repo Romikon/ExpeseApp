@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from './user.entity';
+import { IUser } from './user.entity';
 import { UserDTO } from 'src/dto/dto';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    @InjectRepository(IUser)
+    private readonly userRepository: Repository<IUser>,
   ) {}
 
   async findAll(){
