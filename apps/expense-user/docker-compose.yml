@@ -1,0 +1,10 @@
+ postgres-users:
+    image: postgres
+    container_name: postgres-users
+    environment:
+      POSTGRES_USER: roman1
+      POSTGRES_PASSWORD: 123123
+      POSTGRES_DB: budget
+    ports:
+      - "5434:5432"
+    restart: always
