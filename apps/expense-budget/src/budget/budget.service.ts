@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Budget } from './budget.entity';
-import { BudgetDTO } from '../dto/dto';
+import { BudgetDTO, PaginationDTO } from '../dto/dto';
 
 @Injectable()
 export class BudgetService {
@@ -11,7 +11,13 @@ export class BudgetService {
     private budgetRepository: Repository<Budget>,
   ) {}
 
-  getBudgets(): Promise<BudgetDTO[]> {
+  getBudgets(limit: PaginationDTO): Promise<BudgetDTO[]> {
+    const { firstObjectId, lastObjectId } = limit
+    if (typeof(firstObjectId) !== 'undefined' && typeof(lastObjectId) !== 'undefined'){
+
+      return this.budgetRepository.find({ skip: (firstObjectId - 1) * lastObjectId, take: lastObjectId });
+    }
+
     return this.budgetRepository.find();
   }
 

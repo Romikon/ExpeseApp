@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsInt, IsNotEmpty, IsString } from 'class-validator';
 
 export class BudgetDTO {
   @IsString()
@@ -8,4 +8,12 @@ export class BudgetDTO {
   @IsString()
   @IsNotEmpty()
   currency: string;
+}
+
+export class PaginationDTO {
+  @IsInt()
+  firstObjectId: number;
+
+  @IsInt()
+  lastObjectId: number;
 }

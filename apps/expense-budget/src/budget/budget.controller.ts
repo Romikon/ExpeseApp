@@ -1,14 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { BudgetService } from './budget.service';
-import { BudgetDTO } from '../dto/dto';
+import { BudgetDTO, PaginationDTO } from '../dto/dto';
 
 @Controller('budget')
 export class BudgetController {
   constructor(private readonly budgetService: BudgetService) {}
 
   @Get()
-  getBudgets(): Promise<BudgetDTO[]>{
-    return this.budgetService.getBudgets();
+  getBudgets(@Query() limit: PaginationDTO): Promise<BudgetDTO[]>{
+    return this.budgetService.getBudgets(limit);
   }
 
   @Post()

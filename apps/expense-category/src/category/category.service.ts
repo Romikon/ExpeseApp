@@ -2,52 +2,38 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from './category.entity';
 import { Repository } from 'typeorm';
-import * as amqp from 'amqplib';
-import { CategoryDTO } from '../dto/dto';
+import { CategoryDTO, CategoryFromRabbitMQDTO, PaginationDTO } from '../dto/dto';
 
 @Injectable()
 export class CategoryService {
-  private connection: amqp.Connection;
-  private channel: amqp.Channel;
-  private readonly queue = 'writeAddictionalInfo';
-  private readonly rabbitmqUrl = 'amqps://wnobioyl:ykNP9ryF9Zyb_EjxntfDy17IcnyLLirN@hawk.rmq.cloudamqp.com/wnobioyl';
-
   constructor(
     @InjectRepository(Category)
     private categoryReposetory: Repository<Category>
   ) {}
 
-  async onModuleInit() {
-    this.connection = await amqp.connect(this.rabbitmqUrl);
-    this.channel = await this.connection.createChannel();
-    await this.channel.assertQueue(this.queue);
-
-    this.channel.consume(this.queue, async (msg) => {
-      const data = JSON.parse(msg.content.toString());
+  getCategories(limit: PaginationDTO): Promise<CategoryDTO[]> {
+    const { firstObjectId, lastObjectId } = limit
+    if (typeof(firstObjectId) !== 'undefined' && typeof(lastObjectId) !== 'undefined'){
       
-      let description
+      return this.categoryReposetory.find({ skip: (firstObjectId - 1) * lastObjectId, take: lastObjectId });
+    }
 
-      if(data.type == 'income'){
-        description = `income was received in the amount ${data.sum} of ${data.activity} category`
-      }
-      else{
-        description = `expenses in the amount of ${data.sum} of ${data.activity} category`
-      }
-
-      const createdInfo = this.categoryReposetory.create({
-        name: data.activity,
-        type: data.type,
-        description: description
-      });
-
-      await this.channel.ack(msg);
-
-      return this.categoryReposetory.save(createdInfo)
-    });
+    return this.categoryReposetory.find()
   }
 
-  getCategories(): Promise<CategoryDTO[]> {
-    return this.categoryReposetory.find();
+  createCategoryFromRabbitMQ(data: CategoryFromRabbitMQDTO): Promise<CategoryDTO> {
+    const { activity, type } = data
+    let description
+    
+    if (data.type === 'income') {
+      description = `An income of ${data.sum} has been received under the ${data.activity} category.`;
+    } else {
+      description = `An expense of ${data.sum} has been recorded under the ${data.activity} category.`;
+    }
+        
+    const transaction = this.categoryReposetory.create({ name: activity, type, description })
+    return this.categoryReposetory.save(transaction)
+    
   }
 
   createCategory(newCategory: CategoryDTO): Promise<CategoryDTO> {

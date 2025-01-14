@@ -1,14 +1,14 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, Query } from '@nestjs/common';
 import { UserService } from './user.service';
-import { UserDTO } from '../dto/dto';
+import { PaginationDTO, UserDTO } from '../dto/dto';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  getAllUsers(): Promise<UserDTO[]> {
-    return this.userService.findAll();
+  getAllUsers(@Query() limit: PaginationDTO): Promise<UserDTO[]> {
+    return this.userService.findAll(limit);
   }
 
   @Post()

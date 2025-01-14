@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
-import { UserDTO } from '../dto/dto';
+import { PaginationDTO, UserDTO } from '../dto/dto';
 
 @Injectable()
 export class UserService {
@@ -11,7 +11,12 @@ export class UserService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async findAll(): Promise<UserDTO[]> {
+  async findAll(limit: PaginationDTO): Promise<UserDTO[]> {
+    const { firstObjectId, lastObjectId } = limit
+    if (typeof(firstObjectId) !== 'undefined' && typeof(lastObjectId) !== 'undefined'){
+
+      return this.userRepository.find({ skip: (firstObjectId - 1) * lastObjectId, take: lastObjectId });
+    }
     return this.userRepository.find();
   }
 

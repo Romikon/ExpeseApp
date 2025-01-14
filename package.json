@@ -23,7 +23,12 @@
     "migration:user:revert": "npm run migration:revert --workspace=apps/expense-user",
     "migration:budget:revert": "npm run migration:revert --workspace=apps/expense-budget",
     "migration:category:revert": "npm run migration:revert --workspace=apps/expense-category",
-    "migration:transaction:revert": "npm run migration:revert --workspace=apps/expense-transaction"
+    "migration:transaction:revert": "npm run migration:revert --workspace=apps/expense-transaction",
+    "migration:show:all": "concurrently \"npm run migration:show --workspace=apps/expense-transaction\" \"npm run migration:show --workspace=apps/expense-budget\" \"npm run migration:show --workspace=apps/expense-category\" \"npm run migration:show --workspace=apps/expense-user\"",
+    "migration:show:user": "npm run migration:show --workspace=apps/expense-user",
+    "migration:show:budget": "npm run migration:show --workspace=apps/expense-budget",
+    "migration:show:category": "npm run migration:show --workspace=apps/expense-category",
+    "migration:show:transaction": "npm run migration:show --workspace=apps/expense-transaction"
   },
   "keywords": [],
   "author": "",

@@ -1,8 +1,5 @@
 import * as amqp from 'amqplib';
-import * as dotenv from 'dotenv';
 import config from '../config/config'
-
-dotenv.config();
 
 export class CloudAMQP  {
   private connection: amqp.Connection;

@@ -20,19 +20,12 @@ export class CloudAMQP{
     
         this.channel.consume(this.queue, async (msg) => {
           const data = JSON.parse(msg.content.toString());
-          let description
-    
-          if (data.type === 'income') {
-            description = `An income of ${data.sum} has been received under the ${data.activity} category.`;
-          } else {
-            description = `An expense of ${data.sum} has been recorded under the ${data.activity} category.`;
-          }
           
-          const newCategory: CategoryDTO = { name: data.activity, type: data.type, description: description };
+          const newCategory = await this.categoryService.createCategoryFromRabbitMQ(data)
 
-          this.channel.ack(msg);
+          await this.channel.ack(msg);
 
-          return this.categoryService.createCategory(newCategory);
+          return newCategory
         });
       }
 }

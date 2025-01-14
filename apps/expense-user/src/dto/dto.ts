@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsInt, IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class UserDTO {
   @IsString()
@@ -12,4 +12,12 @@ export class UserDTO {
   @IsString()
   @IsNotEmpty()
   password: string;
+}
+
+export class PaginationDTO {
+  @IsInt()
+  firstObjectId: number;
+
+  @IsInt()
+  lastObjectId: number;
 }

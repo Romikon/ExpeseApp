@@ -1,14 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { TransactionService } from './transaction.service';
-import { TransactionDTO } from '../dto/dto';
+import { PaginationDTO, TransactionDTO } from '../dto/dto';
 
 @Controller('transactions')
 export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 
   @Get()
-  getTransactions(): Promise<TransactionDTO[]> {
-    return this.transactionService.getTransactions();
+  getTransactions(@Query() limit: PaginationDTO): Promise<TransactionDTO[]> {
+    return this.transactionService.getTransactions(limit);
   }
 
   @Post()

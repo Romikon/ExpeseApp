@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Transaction } from './transaction.entity';
 import { Repository } from 'typeorm';
-import { TransactionDTO } from '../dto/dto';
+import { PaginationDTO, TransactionDTO } from '../dto/dto';
 import { CloudAMQP } from '../amqp/amqp';
 
 @Injectable()
@@ -13,7 +13,13 @@ export class TransactionService {
     private transactionReposetory: Repository<Transaction>
   ) {}
 
-  getTransactions(): Promise<TransactionDTO[]> {
+  getTransactions(limit: PaginationDTO): Promise<TransactionDTO[]> {
+    const { firstObjectId, lastObjectId } = limit
+    if (typeof(firstObjectId) !== 'undefined' && typeof(lastObjectId) !== 'undefined'){
+      
+      return this.transactionReposetory.find({ skip: (firstObjectId - 1) * lastObjectId, take: lastObjectId });
+    }
+    
     return this.transactionReposetory.find();
   }
 

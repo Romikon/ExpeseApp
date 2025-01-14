@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsInt, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class TransactionDTO {
   @IsNumber()
@@ -20,4 +20,12 @@ export class TransactionDTO {
   @IsString()
   @IsNotEmpty()
   activity: string;
+}
+
+export class PaginationDTO {
+  @IsInt()
+  firstObjectId: number;
+
+  @IsInt()
+  lastObjectId: number;
 }
