@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity({ schema: 'transactions', name: 'transactions' })
-export class ITransaction {
+export class Transaction {
   @PrimaryGeneratedColumn()
   id: number;
 

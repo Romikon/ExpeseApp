@@ -1,6 +1,6 @@
 postgres-container:
     image: postgres
-    container_name: postgres-container
+    container_name: postgres-budget
     env_file:
       - .env
     ports:

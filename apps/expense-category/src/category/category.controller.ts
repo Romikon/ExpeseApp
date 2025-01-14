@@ -1,23 +1,23 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { CategoryService } from './category.service';
-import { CategoryDTO } from 'src/dto/dto';
+import { CategoryDTO } from '../dto/dto';
 
 @Controller('category')
 export class CategoryController {
   constructor(private readonly transactionService: CategoryService) {}
 
   @Get()
-  getCategories(){
+  getCategories(): Promise<CategoryDTO[]> {
     return this.transactionService.getCategories();
   }
 
   @Post()
-  createCategory(@Body() newCategory: CategoryDTO) {
+  createCategory(@Body() newCategory: CategoryDTO): Promise<CategoryDTO> {
     return this.transactionService.createCategory(newCategory)
   }
 
   @Put(':id')
-  updateCategory(@Param('id') id: number, @Body() updateCategory: CategoryDTO){
+  updateCategory(@Param('id') id: number, @Body() updateCategory: CategoryDTO): Promise<CategoryDTO> {
     return this.transactionService.updateCategory(id, updateCategory)
   }
 

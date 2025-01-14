@@ -1,23 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ITransaction } from './transaction.entity';
+import { Transaction } from './transaction.entity';
 import { Repository } from 'typeorm';
-import { TransactionDTO } from 'src/dto/dto';
-import { CloudAMQP } from 'src/amqp/amqp';
+import { TransactionDTO } from '../dto/dto';
+import { CloudAMQP } from '../amqp/amqp';
 
 @Injectable()
 export class TransactionService {
   constructor(
     private cloudAMQP: CloudAMQP,
-    @InjectRepository(ITransaction)
-    private transactionReposetory: Repository<ITransaction>
+    @InjectRepository(Transaction)
+    private transactionReposetory: Repository<Transaction>
   ) {}
 
-  getTransactions(){
+  getTransactions(): Promise<TransactionDTO[]> {
     return this.transactionReposetory.find();
   }
 
-  async createTransaction(newTransaction: TransactionDTO){
+  async createTransaction(newTransaction: TransactionDTO): Promise<TransactionDTO> {
     const { budgetid, categoryid, type, sum, activity } = newTransaction
     const transaction = await this.transactionReposetory.create({ budgetid, categoryid, type, sum, activity })
     await this.cloudAMQP.sendMessage({ type: type, sum: sum, activity: activity })
@@ -25,7 +25,7 @@ export class TransactionService {
     return this.transactionReposetory.save(transaction)
   }
 
-  async updateTransaction(id: number, updateTransaction: TransactionDTO){
+  async updateTransaction(id: number, updateTransaction: TransactionDTO): Promise<TransactionDTO> {
     const {budgetid, categoryid, type, sum, activity} = updateTransaction
     await this.transactionReposetory.update(id, { budgetid, categoryid, type, sum, activity })
 

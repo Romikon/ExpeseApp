@@ -1,13 +1,14 @@
 import * as amqp from 'amqplib';
 import * as dotenv from 'dotenv';
+import config from '../config/config'
 
 dotenv.config();
 
 export class CloudAMQP  {
   private connection: amqp.Connection;
   private channel: amqp.Channel;
-  private readonly queue = process.env.RABBITMQ_QUEUE;
-  private readonly rabbitmqUrl = process.env.RABBITMQ_URL;
+  private readonly queue = config.rabbitMQQueue;
+  private readonly rabbitmqUrl = config.rabbitMQUrl;
 
   async connect() {
       this.connection = await amqp.connect(this.rabbitmqUrl);

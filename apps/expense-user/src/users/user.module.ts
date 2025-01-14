@@ -2,16 +2,13 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
-import { IUser } from './user.entity';
-import * as dotenv from 'dotenv';
-import { typeOrmConfig } from 'src/config/config';
-
-dotenv.config();
+import { User } from './user.entity';
+import { typeOrmConfig } from '../config/config';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(typeOrmConfig),
-    TypeOrmModule.forFeature([IUser]),
+    TypeOrmModule.forFeature([User]),
   ],
   controllers: [UserController],
   providers: [UserService],

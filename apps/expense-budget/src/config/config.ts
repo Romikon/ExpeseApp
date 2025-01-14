@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { IBudget } from 'src/budget/budget.entity';
+import { Budget } from '../budget/budget.entity';
 
 dotenv.config();
 
@@ -11,6 +11,16 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB,
-  entities: [IBudget],
+  entities: [Budget],
   synchronize: true,
+};
+
+export default {
+  dbUser: process.env.POSTGRES_USER,
+  dbPassword: process.env.POSTGRES_PASSWORD,
+  dbName: process.env.POSTGRES_DB,
+  port: process.env.PORT,
+  dbHost: process.env.DB_HOST,
+  dbPort: process.env.DB_PORT,
+  dbSchema: process.env.DB_SCHEMA
 };

@@ -1,23 +1,23 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { TransactionService } from './transaction.service';
-import { TransactionDTO } from 'src/dto/dto';
+import { TransactionDTO } from '../dto/dto';
 
 @Controller('transactions')
 export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 
   @Get()
-  getTransactions(){
+  getTransactions(): Promise<TransactionDTO[]> {
     return this.transactionService.getTransactions();
   }
 
   @Post()
-  createTransaction(@Body() newTransaction: TransactionDTO) {
+  createTransaction(@Body() newTransaction: TransactionDTO): Promise<TransactionDTO> {
     return this.transactionService.createTransaction(newTransaction)
   }
 
   @Put(':id')
-  updateTransaction(@Param('id') id: number, @Body() updateTransaction: TransactionDTO){
+  updateTransaction(@Param('id') id: number, @Body() updateTransaction: TransactionDTO): Promise<TransactionDTO>{
     return this.transactionService.updateTransaction(id, updateTransaction)
   }
 

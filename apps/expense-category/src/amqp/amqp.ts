@@ -1,17 +1,13 @@
-import { Injectable } from '@nestjs/common';
 import * as amqp from 'amqplib';
-import { CategoryService } from 'src/category/category.service';
-import { CategoryDTO } from 'src/dto/dto';
-import * as dotenv from 'dotenv';
+import { CategoryService } from '../category/category.service';
+import { CategoryDTO } from '../dto/dto';
+import config from '../config/config'
 
-dotenv.config();
-
-@Injectable()
 export class CloudAMQP{
     private connection: amqp.Connection;
     private channel: amqp.Channel;
-    private readonly queue = process.env.RABBITMQ_QUEUE;
-    private readonly rabbitmqUrl = process.env.RABBITMQ_URL;
+    private readonly queue = config.rabbitMQQueue;
+    private readonly rabbitmqUrl = config.rabbitMQUrl;
 
     constructor(
         private categoryService: CategoryService
