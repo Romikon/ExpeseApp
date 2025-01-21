@@ -1,6 +1,6 @@
-import { IsInt, IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsInt, IsEmail, IsNotEmpty, IsString, IsOptional, IsNumber } from 'class-validator';
 
-export class UserDTO {
+class CreateUserDTO {
   @IsString()
   @IsNotEmpty()
   name: string;
@@ -14,10 +14,47 @@ export class UserDTO {
   password: string;
 }
 
-export class PaginationDTO {
+class UpdateUserDTO{
+  @IsString()
+  @IsOptional()
+  name?: string;
+
+  @IsEmail()
+  @IsOptional()
+  email?: string;
+
+  @IsString()
+  @IsOptional()
+  password?: string;
+}
+
+class GetUserDTO{
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
+
+  @IsString()
+  @IsNotEmpty()
+  password: string;
+}
+
+class PaginationDTO {
   @IsInt()
-  firstObjectId: number;
+  @IsOptional()
+  firstObjectId?: number;
 
   @IsInt()
-  lastObjectId: number;
+  @IsOptional()
+  lastObjectId?: number;
+}
+
+export{
+  GetUserDTO,
+  CreateUserDTO,
+  UpdateUserDTO,
+  PaginationDTO
 }

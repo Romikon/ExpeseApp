@@ -1,6 +1,6 @@
-import { IsInt, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsInt, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class TransactionDTO {
+class CreateTransactionDTO {
   @IsNumber()
   @IsNotEmpty()
   budgetid: number;
@@ -22,10 +22,63 @@ export class TransactionDTO {
   activity: string;
 }
 
-export class PaginationDTO {
+class UpdateTransactionDTO{
+  @IsNumber()
+  @IsOptional()
+  budgetid?: number;
+
+  @IsNumber()
+  @IsOptional()
+  categoryid?: number;
+
+  @IsString()
+  @IsOptional()
+  type?: string;
+
+  @IsNumber()
+  @IsOptional()
+  sum?: number;
+
+  @IsString()
+  @IsOptional()
+  activity?: string;
+}
+
+class GetTransactionDTO{
+  @IsNumber()
+  @IsNotEmpty()
+  budgetid: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  categoryid: number;
+
+  @IsString()
+  @IsNotEmpty()
+  type: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  sum: number;
+
+  @IsString()
+  @IsNotEmpty()
+  activity: string;
+}
+
+class PaginationDTO {
   @IsInt()
-  firstObjectId: number;
+  @IsOptional()
+  firstObjectId?: number;
 
   @IsInt()
-  lastObjectId: number;
+  @IsOptional()
+  lastObjectId?: number;
+}
+
+export {
+  GetTransactionDTO,
+  CreateTransactionDTO,
+  UpdateTransactionDTO,
+  PaginationDTO
 }

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { Budget } from './budget.entity';
-import { BudgetDTO, PaginationDTO } from '../dto/dto';
+import { CreateBudgetDTO, PaginationDTO, UpdateBudgetDTO, GetBudgetDTO } from '../dto/dto';
 
 @Injectable()
 export class BudgetService {
@@ -11,7 +11,7 @@ export class BudgetService {
     private budgetRepository: Repository<Budget>,
   ) {}
 
-  getBudgets(limit: PaginationDTO): Promise<BudgetDTO[]> {
+  getBudgets(limit: PaginationDTO): Promise<GetBudgetDTO[]> {
     const { firstObjectId, lastObjectId } = limit
     if (typeof(firstObjectId) !== 'undefined' && typeof(lastObjectId) !== 'undefined'){
 
@@ -21,7 +21,7 @@ export class BudgetService {
     return this.budgetRepository.find();
   }
 
-  async createBudget(newBudget: BudgetDTO): Promise<BudgetDTO> {
+  async createBudget(newBudget: CreateBudgetDTO): Promise<CreateBudgetDTO> {
 
     const { name, currency } = newBudget
     const month = new Date().toLocaleString('en-US', { month: 'long' });
@@ -31,15 +31,16 @@ export class BudgetService {
     return this.budgetRepository.save(budget)
   }
 
-  async updateBudget(id: number, updateBudget: BudgetDTO): Promise<BudgetDTO> {
+  async updateBudget(id: number, updateBudget: UpdateBudgetDTO): Promise<UpdateBudgetDTO> {
+    const ifBudgetExist = await this.budgetRepository.findOne({ where: { id } })
 
-    const { name, currency } = updateBudget
-    await this.budgetRepository.update(id, { name, currency })
-
-    return this.budgetRepository.findOne({where: { id: id }})
+    if (ifBudgetExist)
+      return this.budgetRepository.save(updateBudget)
+    
+    return ifBudgetExist
   }
 
-  deleteBudet(id: number){
+  deleteBudet(id: number): Promise<DeleteResult>{
     return this.budgetRepository.delete(id)
   }
 }

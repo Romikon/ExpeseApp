@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from './category.entity';
-import { Repository } from 'typeorm';
-import { CategoryDTO, CategoryFromRabbitMQDTO, PaginationDTO } from '../dto/dto';
+import { DeleteResult, Repository } from 'typeorm';
+import { CreateCategoryDTO, CategoryFromRabbitMQDTO, PaginationDTO, UpdateCategoryDTO, GetCategoryDTO } from '../dto/dto';
 
 @Injectable()
 export class CategoryService {
@@ -11,7 +11,7 @@ export class CategoryService {
     private categoryReposetory: Repository<Category>
   ) {}
 
-  getCategories(limit: PaginationDTO): Promise<CategoryDTO[]> {
+  getCategories(limit: PaginationDTO): Promise<GetCategoryDTO[]> {
     const { firstObjectId, lastObjectId } = limit
     if (typeof(firstObjectId) !== 'undefined' && typeof(lastObjectId) !== 'undefined'){
       
@@ -21,7 +21,7 @@ export class CategoryService {
     return this.categoryReposetory.find()
   }
 
-  createCategoryFromRabbitMQ(data: CategoryFromRabbitMQDTO): Promise<CategoryDTO> {
+  createCategoryFromRabbitMQ(data: CategoryFromRabbitMQDTO): Promise<CreateCategoryDTO> {
     const { activity, type } = data
     let description
     
@@ -36,21 +36,23 @@ export class CategoryService {
     
   }
 
-  createCategory(newCategory: CategoryDTO): Promise<CategoryDTO> {
+  createCategory(newCategory: CreateCategoryDTO): Promise<CreateCategoryDTO> {
     const { name, type, description } = newCategory
     const transaction = this.categoryReposetory.create({ name, type, description })
 
     return this.categoryReposetory.save(transaction)
   }
 
-  async updateCategory(id: number, updateCategory: CategoryDTO): Promise<CategoryDTO> {
-    const { name, type, description } = updateCategory
-    await this.categoryReposetory.update(id, {name, type, description})
+  async updateCategory(id: number, updateCategory: UpdateCategoryDTO): Promise<UpdateCategoryDTO> {
+    const ifCategoryExist = await this.categoryReposetory.findOne({ where: { id }})
 
-    return this.categoryReposetory.findOne({ where: { id: id }})
+    if (ifCategoryExist)
+      return this.categoryReposetory.save(updateCategory)
+
+    return ifCategoryExist
   }
 
-  deleteCategory(id: number){
+  deleteCategory(id: number): Promise<DeleteResult>{
     return this.categoryReposetory.delete(id);
   }
 }

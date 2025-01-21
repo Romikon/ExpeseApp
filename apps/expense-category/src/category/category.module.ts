@@ -9,7 +9,7 @@ import { typeOrmConfig } from '../config/config';
 @Module({
   imports: [
     TypeOrmModule.forRoot(typeOrmConfig),
-  TypeOrmModule.forFeature([Category]),    
+    TypeOrmModule.forFeature([Category]),    
   ],
   controllers: [CategoryController],
   providers: [CategoryService, CloudAMQP],
