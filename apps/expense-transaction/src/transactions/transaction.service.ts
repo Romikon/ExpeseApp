@@ -1,19 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Transaction } from './transaction.entity';
+import { TransactionEntity } from './transaction.entity';
 import { DeleteResult, Repository } from 'typeorm';
-import { PaginationDTO, CreateTransactionDTO, GetTransactionDTO, UpdateTransactionDTO } from '../dto/dto';
+import { PaginationDto, CreateTransactionDto, GetTransactionDto, UpdateTransactionDto } from '../dto/dto';
 import { CloudAMQP } from '../amqp/amqp';
 
 @Injectable()
 export class TransactionService {
   constructor(
     private cloudAMQP: CloudAMQP,
-    @InjectRepository(Transaction)
-    private transactionReposetory: Repository<Transaction>
+    @InjectRepository(TransactionEntity)
+    private transactionReposetory: Repository<TransactionEntity>
   ) {}
 
-  getTransactions(limit: PaginationDTO): Promise<GetTransactionDTO[]> {
+  getTransactions(limit: PaginationDto): Promise<GetTransactionDto[]> {
     const { firstObjectId, lastObjectId } = limit
     if (typeof(firstObjectId) !== 'undefined' && typeof(lastObjectId) !== 'undefined'){
       
@@ -23,7 +23,7 @@ export class TransactionService {
     return this.transactionReposetory.find();
   }
 
-  async createTransaction(newTransaction: CreateTransactionDTO): Promise<CreateTransactionDTO> {
+  async createTransaction(newTransaction: CreateTransactionDto): Promise<CreateTransactionDto> {
     const { budgetid, categoryid, type, sum, activity } = newTransaction
     const transaction = await this.transactionReposetory.create({ budgetid, categoryid, type, sum, activity })
     await this.cloudAMQP.sendMessage({ type: type, sum: sum, activity: activity })
@@ -31,7 +31,7 @@ export class TransactionService {
     return this.transactionReposetory.save(transaction)
   }
 
-  async updateTransaction(id: number, updateTransaction: UpdateTransactionDTO): Promise<UpdateTransactionDTO> {
+  async updateTransaction(id: number, updateTransaction: UpdateTransactionDto): Promise<UpdateTransactionDto> {
     const ifTransactionExist = await this.transactionReposetory.findOne({ where: { id }})
     
     if (ifTransactionExist)

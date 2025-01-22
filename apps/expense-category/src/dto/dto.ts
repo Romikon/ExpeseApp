@@ -1,6 +1,6 @@
 import { IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
-class CreateCategoryDTO {
+class CreateCategoryDto {
   @IsString()
   @IsNotEmpty()
   name: string;
@@ -14,7 +14,7 @@ class CreateCategoryDTO {
   description: string;
 }
 
-class UpdateCategoryDTO{
+class UpdateCategoryDto{
   @IsString()
   @IsOptional()
   name?: string;
@@ -28,7 +28,7 @@ class UpdateCategoryDTO{
   description?: string;
 }
 
-class GetCategoryDTO {
+class GetCategoryDto {
   @IsString()
   @IsNotEmpty()
   name: string;
@@ -42,7 +42,7 @@ class GetCategoryDTO {
   description: string;
 }
 
-class CategoryFromRabbitMQDTO {
+class CategoryFromRabbitMQDto {
   @IsString()
   @IsNotEmpty()
   activity: string;
@@ -56,7 +56,7 @@ class CategoryFromRabbitMQDTO {
   sum: string;
 }
 
-class PaginationDTO {
+class PaginationDto {
   @IsInt()
   @IsOptional()
   firstObjectId?: number;
@@ -67,9 +67,9 @@ class PaginationDTO {
 }
 
 export {
-  GetCategoryDTO,
-  CreateCategoryDTO,
-  UpdateCategoryDTO,
-  PaginationDTO,
-  CategoryFromRabbitMQDTO
+  GetCategoryDto,
+  CreateCategoryDto,
+  UpdateCategoryDto,
+  PaginationDto,
+  CategoryFromRabbitMQDto
 }

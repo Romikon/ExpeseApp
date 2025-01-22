@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { CategoryService } from './category.service';
-import { CreateCategoryDTO, PaginationDTO, UpdateCategoryDTO , GetCategoryDTO } from '../dto/dto';
+import { CreateCategoryDto, PaginationDto, UpdateCategoryDto , GetCategoryDto } from '../dto/dto';
 import { DeleteResult } from 'typeorm';
 
 @Controller('category')
@@ -8,17 +8,17 @@ export class CategoryController {
   constructor(private readonly transactionService: CategoryService) {}
 
   @Get()
-  getCategories(@Query() limit: PaginationDTO): Promise<GetCategoryDTO[]> {
+  getCategories(@Query() limit: PaginationDto): Promise<GetCategoryDto[]> {
     return this.transactionService.getCategories(limit);
   }
 
   @Post()
-  createCategory(@Body() newCategory: CreateCategoryDTO): Promise<CreateCategoryDTO> {
+  createCategory(@Body() newCategory: CreateCategoryDto): Promise<CreateCategoryDto> {
     return this.transactionService.createCategory(newCategory)
   }
 
   @Put(':id')
-  updateCategory(@Param('id') id: number, @Body() updateCategory: UpdateCategoryDTO): Promise<UpdateCategoryDTO> {
+  updateCategory(@Param('id') id: number, @Body() updateCategory: UpdateCategoryDto): Promise<UpdateCategoryDto> {
     return this.transactionService.updateCategory(id, updateCategory)
   }
 

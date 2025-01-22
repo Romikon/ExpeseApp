@@ -1,6 +1,6 @@
 import { IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
-class CreateBudgetDTO {
+class CreateBudgetDto {
   @IsString()
   @IsNotEmpty()
   name: string;
@@ -10,7 +10,7 @@ class CreateBudgetDTO {
   currency: string;
 }
 
-class UpdateBudgetDTO {
+class UpdateBudgetDto {
   @IsString()
   @IsOptional()
   name?: string;
@@ -24,7 +24,7 @@ class UpdateBudgetDTO {
   month?: string;
 }
 
-class GetBudgetDTO {
+class GetBudgetDto {
   @IsString()
   @IsNotEmpty()
   name: string;
@@ -34,7 +34,7 @@ class GetBudgetDTO {
   currency: string;
 }
 
-class PaginationDTO {
+class PaginationDto {
   @IsInt()
   @IsOptional()
   firstObjectId?: number;
@@ -45,8 +45,8 @@ class PaginationDTO {
 }
 
 export {
-  GetBudgetDTO,
-  CreateBudgetDTO,
-  UpdateBudgetDTO,
-  PaginationDTO
+  GetBudgetDto,
+  CreateBudgetDto,
+  UpdateBudgetDto,
+  PaginationDto
 }

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TransactionService } from './transaction.service';
-import { Transaction } from './transaction.entity';
+import { TransactionEntity } from './transaction.entity';
 import { TransactionController } from './transaction.controller';
 import { CloudAMQP } from '../amqp/amqp';
 import { typeOrmConfig } from '../config/config';
@@ -9,7 +9,7 @@ import { typeOrmConfig } from '../config/config';
 @Module({
   imports: [
     TypeOrmModule.forRoot(typeOrmConfig),
-  TypeOrmModule.forFeature([Transaction]),
+  TypeOrmModule.forFeature([TransactionEntity]),
   ],
   controllers: [TransactionController],
   providers: [TransactionService, CloudAMQP],

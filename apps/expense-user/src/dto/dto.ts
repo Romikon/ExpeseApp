@@ -1,6 +1,6 @@
 import { IsInt, IsEmail, IsNotEmpty, IsString, IsOptional, IsNumber } from 'class-validator';
 
-class CreateUserDTO {
+class CreateUserDto {
   @IsString()
   @IsNotEmpty()
   name: string;
@@ -14,7 +14,7 @@ class CreateUserDTO {
   password: string;
 }
 
-class UpdateUserDTO{
+class UpdateUserDto{
   @IsString()
   @IsOptional()
   name?: string;
@@ -28,7 +28,7 @@ class UpdateUserDTO{
   password?: string;
 }
 
-class GetUserDTO{
+class GetUserDto{
   @IsString()
   @IsNotEmpty()
   name: string;
@@ -42,7 +42,7 @@ class GetUserDTO{
   password: string;
 }
 
-class PaginationDTO {
+class PaginationDto {
   @IsInt()
   @IsOptional()
   firstObjectId?: number;
@@ -53,8 +53,8 @@ class PaginationDTO {
 }
 
 export{
-  GetUserDTO,
-  CreateUserDTO,
-  UpdateUserDTO,
-  PaginationDTO
+  GetUserDto,
+  CreateUserDto,
+  UpdateUserDto,
+  PaginationDto
 }

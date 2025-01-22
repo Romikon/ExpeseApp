@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Category } from './category.entity';
+import { CategoryEntity } from './category.entity';
 import { DeleteResult, Repository } from 'typeorm';
-import { CreateCategoryDTO, CategoryFromRabbitMQDTO, PaginationDTO, UpdateCategoryDTO, GetCategoryDTO } from '../dto/dto';
+import { CreateCategoryDto, CategoryFromRabbitMQDto, PaginationDto, UpdateCategoryDto, GetCategoryDto } from '../dto/dto';
 
 @Injectable()
 export class CategoryService {
   constructor(
-    @InjectRepository(Category)
-    private categoryReposetory: Repository<Category>
+    @InjectRepository(CategoryEntity)
+    private categoryReposetory: Repository<CategoryEntity>
   ) {}
 
-  getCategories(limit: PaginationDTO): Promise<GetCategoryDTO[]> {
+  getCategories(limit: PaginationDto): Promise<GetCategoryDto[]> {
     const { firstObjectId, lastObjectId } = limit
     if (typeof(firstObjectId) !== 'undefined' && typeof(lastObjectId) !== 'undefined'){
       
@@ -21,7 +21,7 @@ export class CategoryService {
     return this.categoryReposetory.find()
   }
 
-  createCategoryFromRabbitMQ(data: CategoryFromRabbitMQDTO): Promise<CreateCategoryDTO> {
+  createCategoryFromRabbitMQ(data: CategoryFromRabbitMQDto): Promise<CreateCategoryDto> {
     const { activity, type } = data
     let description
     
@@ -36,14 +36,14 @@ export class CategoryService {
     
   }
 
-  createCategory(newCategory: CreateCategoryDTO): Promise<CreateCategoryDTO> {
+  createCategory(newCategory: CreateCategoryDto): Promise<CreateCategoryDto> {
     const { name, type, description } = newCategory
     const transaction = this.categoryReposetory.create({ name, type, description })
 
     return this.categoryReposetory.save(transaction)
   }
 
-  async updateCategory(id: number, updateCategory: UpdateCategoryDTO): Promise<UpdateCategoryDTO> {
+  async updateCategory(id: number, updateCategory: UpdateCategoryDto): Promise<UpdateCategoryDto> {
     const ifCategoryExist = await this.categoryReposetory.findOne({ where: { id }})
 
     if (ifCategoryExist)

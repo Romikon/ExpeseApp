@@ -1,6 +1,6 @@
 import { IsInt, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
-class CreateTransactionDTO {
+class CreateTransactionDto {
   @IsNumber()
   @IsNotEmpty()
   budgetid: number;
@@ -22,7 +22,7 @@ class CreateTransactionDTO {
   activity: string;
 }
 
-class UpdateTransactionDTO{
+class UpdateTransactionDto{
   @IsNumber()
   @IsOptional()
   budgetid?: number;
@@ -44,7 +44,7 @@ class UpdateTransactionDTO{
   activity?: string;
 }
 
-class GetTransactionDTO{
+class GetTransactionDto{
   @IsNumber()
   @IsNotEmpty()
   budgetid: number;
@@ -66,7 +66,7 @@ class GetTransactionDTO{
   activity: string;
 }
 
-class PaginationDTO {
+class PaginationDto {
   @IsInt()
   @IsOptional()
   firstObjectId?: number;
@@ -77,8 +77,8 @@ class PaginationDTO {
 }
 
 export {
-  GetTransactionDTO,
-  CreateTransactionDTO,
-  UpdateTransactionDTO,
-  PaginationDTO
+  GetTransactionDto,
+  CreateTransactionDto,
+  UpdateTransactionDto,
+  PaginationDto
 }

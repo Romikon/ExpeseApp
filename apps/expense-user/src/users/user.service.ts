@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
-import { User } from './user.entity';
-import { PaginationDTO, CreateUserDTO, GetUserDTO, UpdateUserDTO } from '../dto/dto';
+import { UserEntity } from './user.entity';
+import { PaginationDto, CreateUserDto, GetUserDto, UpdateUserDto } from '../dto/dto';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  async getUsers(limit: PaginationDTO): Promise<GetUserDTO[]> {
+  async getUsers(limit: PaginationDto): Promise<GetUserDto[]> {
     const { firstObjectId, lastObjectId } = limit
     if (typeof(firstObjectId) !== 'undefined' && typeof(lastObjectId) !== 'undefined'){
 
@@ -20,14 +20,14 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  async createUser(newUser: CreateUserDTO): Promise<CreateUserDTO> {
+  async createUser(newUser: CreateUserDto): Promise<CreateUserDto> {
     const { name, email, password } = newUser
     const User = this.userRepository.create({ name, email, password });
 
     return this.userRepository.save(User);
   }
 
-  async updateUser(id: number, updateUser: UpdateUserDTO): Promise<UpdateUserDTO> {
+  async updateUser(id: number, updateUser: UpdateUserDto): Promise<UpdateUserDto> {
     const ifUserExist = await this.userRepository.findOne({ where: { id }})
     
     if (ifUserExist)
