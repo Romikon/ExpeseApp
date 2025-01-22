@@ -11,11 +11,11 @@ export class CategoryService {
     private categoryReposetory: Repository<CategoryEntity>
   ) {}
 
-  getCategories(limit: PaginationDto): Promise<GetCategoryDto[]> {
-    const { firstObjectId, lastObjectId } = limit
-    if (typeof(firstObjectId) !== 'undefined' && typeof(lastObjectId) !== 'undefined'){
+  getCategories(pagination: PaginationDto): Promise<GetCategoryDto[]> {
+    const { page, size } = pagination
+    if (typeof(page) !== 'undefined' && typeof(size) !== 'undefined'){
       
-      return this.categoryReposetory.find({ skip: (firstObjectId - 1) * lastObjectId, take: lastObjectId });
+      return this.categoryReposetory.find({ skip: (page - 1) * size, take: size });
     }
 
     return this.categoryReposetory.find()

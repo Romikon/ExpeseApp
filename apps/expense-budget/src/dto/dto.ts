@@ -35,13 +35,13 @@ class GetBudgetDto {
 }
 
 class PaginationDto {
-  @IsInt()
+  @IsString()
   @IsOptional()
-  firstObjectId?: number;
+  page?: number;
 
-  @IsInt()
+  @IsString()
   @IsOptional()
-  lastObjectId?: number;
+  size?: number;
 }
 
 export {

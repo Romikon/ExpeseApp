@@ -1,6 +1,5 @@
 import * as amqp from 'amqplib';
 import { CategoryService } from '../category/category.service';
-import { CategoryDTO } from '../dto/dto';
 import config from '../config/config'
 
 export class CloudAMQP{
@@ -23,7 +22,7 @@ export class CloudAMQP{
           
           const newCategory = await this.categoryService.createCategoryFromRabbitMQ(data)
 
-          await this.channel.ack(msg);
+          this.channel.ack(msg);
 
           return newCategory
         });

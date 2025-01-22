@@ -8,8 +8,8 @@ export class CategoryController {
   constructor(private readonly transactionService: CategoryService) {}
 
   @Get()
-  getCategories(@Query() limit: PaginationDto): Promise<GetCategoryDto[]> {
-    return this.transactionService.getCategories(limit);
+  getCategories(@Query() pagination: PaginationDto): Promise<GetCategoryDto[]> {
+    return this.transactionService.getCategories(pagination);
   }
 
   @Post()

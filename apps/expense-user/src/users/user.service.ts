@@ -11,11 +11,11 @@ export class UserService {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  async getUsers(limit: PaginationDto): Promise<GetUserDto[]> {
-    const { firstObjectId, lastObjectId } = limit
-    if (typeof(firstObjectId) !== 'undefined' && typeof(lastObjectId) !== 'undefined'){
+  async getUsers(pagination: PaginationDto): Promise<GetUserDto[]> {
+    const { page, size } = pagination
+    if (typeof(page) !== 'undefined' && typeof(size) !== 'undefined'){
 
-      return this.userRepository.find({ skip: (firstObjectId - 1) * lastObjectId, take: lastObjectId });
+      return this.userRepository.find({ skip: (page - 1) * size, take: size });
     }
     return this.userRepository.find();
   }

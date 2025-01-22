@@ -13,11 +13,11 @@ export class TransactionService {
     private transactionReposetory: Repository<TransactionEntity>
   ) {}
 
-  getTransactions(limit: PaginationDto): Promise<GetTransactionDto[]> {
-    const { firstObjectId, lastObjectId } = limit
-    if (typeof(firstObjectId) !== 'undefined' && typeof(lastObjectId) !== 'undefined'){
+  getTransactions(pagination: PaginationDto): Promise<GetTransactionDto[]> {
+    const { page, size } = pagination
+    if (typeof(page) !== 'undefined' && typeof(size) !== 'undefined'){
       
-      return this.transactionReposetory.find({ skip: (firstObjectId - 1) * lastObjectId, take: lastObjectId });
+      return this.transactionReposetory.find({ skip: (page - 1) * size, take: size });
     }
     
     return this.transactionReposetory.find();

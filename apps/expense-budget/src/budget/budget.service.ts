@@ -11,11 +11,11 @@ export class BudgetService {
     private budgetRepository: Repository<BudgetEntity>,
   ) {}
 
-  getBudgets(limit: PaginationDto): Promise<GetBudgetDto[]> {
-    const { firstObjectId, lastObjectId } = limit
-    if (typeof(firstObjectId) !== 'undefined' && typeof(lastObjectId) !== 'undefined'){
+  getBudgets(pagination: PaginationDto): Promise<GetBudgetDto[]> {
+    const { page, size } = pagination
+    if (typeof(page) !== 'undefined' && typeof(size) !== 'undefined'){
 
-      return this.budgetRepository.find({ skip: (firstObjectId - 1) * lastObjectId, take: lastObjectId });
+      return this.budgetRepository.find({ skip: (page - 1) * size, take: size });
     }
 
     return this.budgetRepository.find();

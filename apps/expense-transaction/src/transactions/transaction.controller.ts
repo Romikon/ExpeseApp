@@ -8,8 +8,8 @@ export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 
   @Get()
-  getTransactions(@Query() limit: PaginationDto): Promise<GetTransactionDto[]> {
-    return this.transactionService.getTransactions(limit);
+  getTransactions(@Query() pagination: PaginationDto): Promise<GetTransactionDto[]> {
+    return this.transactionService.getTransactions(pagination);
   }
 
   @Post()

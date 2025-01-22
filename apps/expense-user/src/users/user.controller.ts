@@ -8,8 +8,8 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  getAllUsers(@Query() limit: PaginationDto): Promise<GetUserDto[]> {
-    return this.userService.getUsers(limit);
+  getAllUsers(@Query() pagination: PaginationDto): Promise<GetUserDto[]> {
+    return this.userService.getUsers(pagination);
   }
 
   @Post()

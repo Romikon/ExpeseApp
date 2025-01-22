@@ -3,6 +3,7 @@ import { UserModule } from './users/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSourceOptions } from 'db/data-source';
 import { HealthModule } from './health';
+import { DatabaseService } from './shutdown-hook/database.shutdown.hook';
 
 @Module({
   imports: [TypeOrmModule.forRoot(dataSourceOptions),
@@ -10,6 +11,6 @@ import { HealthModule } from './health';
     HealthModule
   ],
   controllers: [],
-  providers: [],
+  providers: [DatabaseService],
 })
 export class AppModule {}

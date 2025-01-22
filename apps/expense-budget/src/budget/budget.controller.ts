@@ -8,8 +8,8 @@ export class BudgetController {
   constructor(private readonly budgetService: BudgetService) {}
 
   @Get()
-  getBudgets(@Query() limit: PaginationDto): Promise<GetBudgetDto[]>{
-    return this.budgetService.getBudgets(limit);
+  getBudgets(@Query() pagination: PaginationDto): Promise<GetBudgetDto[]>{
+    return this.budgetService.getBudgets(pagination);
   }
 
   @Post()
