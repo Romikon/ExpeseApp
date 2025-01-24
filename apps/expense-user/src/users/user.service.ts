@@ -28,12 +28,16 @@ export class UserService {
   }
 
   async updateUser(id: number, updateUser: UpdateUserDto): Promise<UpdateUserDto> {
-    const ifUserExist = await this.userRepository.findOne({ where: { id }})
+    const userExist = await this.userRepository.findOne({ where: { id }});
+    const { name, email, password } = updateUser;
     
-    if (ifUserExist)
-      return this.userRepository.save(updateUser);
+    if (!userExist)
+      throw new Error('User didnt exist!')
 
-    return ifUserExist
+    userExist.name = name;
+    userExist.email = email;
+    userExist.password = password;
+    return this.userRepository.save(userExist);
   }
 
   deleteUser(id: number): Promise<DeleteResult>{

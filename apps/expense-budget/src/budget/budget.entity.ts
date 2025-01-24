@@ -1,10 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, Column } from 'typeorm'
+import { BaseEntity } from '../../../../common/base.entity';
 
 @Entity({ schema: 'budget', name: 'budget' })
-export class BudgetEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class BudgetEntity extends BaseEntity{
   @Column({ nullable: true })
   name: string;
 
@@ -13,10 +11,4 @@ export class BudgetEntity {
 
   @Column({ nullable: true })
   month: string;
-
-  @CreateDateColumn()
-  created_at: Date;
-
-  @UpdateDateColumn()
-  updated_at: Date;
 }

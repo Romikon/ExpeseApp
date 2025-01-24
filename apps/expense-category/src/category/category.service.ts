@@ -44,12 +44,16 @@ export class CategoryService {
   }
 
   async updateCategory(id: number, updateCategory: UpdateCategoryDto): Promise<UpdateCategoryDto> {
-    const ifCategoryExist = await this.categoryReposetory.findOne({ where: { id }})
+    const categoryExist = await this.categoryReposetory.findOne({ where: { id }})
+    const { name, type, description } = updateCategory;
 
-    if (ifCategoryExist)
-      return this.categoryReposetory.save(updateCategory)
+    if (!categoryExist)
+      throw new Error('Category didnt exist!')
 
-    return ifCategoryExist
+    categoryExist.name = name;
+    categoryExist.type = type;
+    categoryExist.description = description;
+    return this.categoryReposetory.save(categoryExist)
   }
 
   deleteCategory(id: number): Promise<DeleteResult>{

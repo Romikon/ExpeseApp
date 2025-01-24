@@ -32,12 +32,19 @@ export class TransactionService {
   }
 
   async updateTransaction(id: number, updateTransaction: UpdateTransactionDto): Promise<UpdateTransactionDto> {
-    const ifTransactionExist = await this.transactionReposetory.findOne({ where: { id }})
+    const transactionExist = await this.transactionReposetory.findOne({ where: { id }});
+    const { budgetid, categoryid, type, sum, activity } = updateTransaction;
     
-    if (ifTransactionExist)
-      return this.transactionReposetory.save(updateTransaction)
+    if (!transactionExist)
+      throw new Error('Transaction didnt exist!');
 
-    return ifTransactionExist
+    transactionExist.budgetid = budgetid;
+    transactionExist.categoryid = categoryid;
+    transactionExist.type = type;
+    transactionExist.sum = sum;
+    transactionExist.activity = activity;
+    return this.transactionReposetory.save(transactionExist)
+
   }
 
   deleteTransaction(id: number): Promise<DeleteResult>{
