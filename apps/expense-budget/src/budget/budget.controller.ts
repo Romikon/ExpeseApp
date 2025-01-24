@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseInterceptors } from '@nestjs/common';
 import { BudgetService } from './budget.service';
 import { UpdateBudgetDto, CreateBudgetDto, PaginationDto, GetBudgetDto } from '../dto/dto';
 import { DeleteResult } from 'typeorm';
+import { LoggerInterceptor } from '../logger/logger';
 
 @Controller('budget')
+@UseInterceptors(LoggerInterceptor)
 export class BudgetController {
   constructor(private readonly budgetService: BudgetService) {}
 

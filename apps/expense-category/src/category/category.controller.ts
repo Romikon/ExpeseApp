@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseInterceptors } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto, PaginationDto, UpdateCategoryDto , GetCategoryDto } from '../dto/dto';
 import { DeleteResult } from 'typeorm';
+import { LoggerInterceptor } from 'src/logger/logger';
 
 @Controller('category')
+@UseInterceptors(LoggerInterceptor)
 export class CategoryController {
   constructor(private readonly transactionService: CategoryService) {}
 

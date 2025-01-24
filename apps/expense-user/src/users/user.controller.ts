@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Body, Param, Put, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, Query, UseInterceptors } from '@nestjs/common';
 import { UserService } from './user.service';
 import { PaginationDto, CreateUserDto, GetUserDto, UpdateUserDto } from '../dto/dto';
 import { DeleteResult } from 'typeorm';
+import { LoggerInterceptor } from 'src/logger/logger';
 
 @Controller('user')
+@UseInterceptors(LoggerInterceptor)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

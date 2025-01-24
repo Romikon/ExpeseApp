@@ -4,11 +4,22 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSourceOptions } from 'db/data-source';
 import { HealthModule } from './health';
 import { DatabaseService } from './shutdown-hook/database.shutdown.hook';
+import { LoggerModule } from 'nestjs-pino';
 
 @Module({
   imports: [TypeOrmModule.forRoot(dataSourceOptions),
     UserModule,
-    HealthModule
+    HealthModule,
+    LoggerModule.forRoot({
+      pinoHttp: {
+        transport: {
+          target: 'pino-pretty',
+          options: {
+            singleLine: true,
+          },
+        },
+      },
+    })
   ],
   controllers: [],
   providers: [DatabaseService],
