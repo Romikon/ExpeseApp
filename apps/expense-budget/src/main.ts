@@ -3,7 +3,6 @@ import { AppModule } from './app.module';
 import config from './config/config'
 import { ValidationPipe } from '@nestjs/common';
 import { Logger } from 'nestjs-pino';
-import { LoggerInterceptor } from './logger/logger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
