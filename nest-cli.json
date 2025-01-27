@@ -27,6 +27,24 @@
       "compilerOptions": {
         "tsConfigPath": "apps/expense-user/tsconfig.app.json"
       }
+    },
+    "common": {
+      "type": "library",
+      "root": "libs/common",
+      "entryFile": "index",
+      "sourceRoot": "libs/common/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/common/tsconfig.lib.json"
+      }
+    },
+    "common-entity": {
+      "type": "library",
+      "root": "libs/common-entity",
+      "entryFile": "index",
+      "sourceRoot": "libs/common-entity/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/common-entity/tsconfig.lib.json"
+      }
     }
   }
 }

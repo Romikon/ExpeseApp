@@ -1,10 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntity } from "@app/common-entity"
 
 @Entity({ schema: 'transactions', name: 'transactions' })
-export class TransactionEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class TransactionEntity extends BaseEntity{
   @Column({ type: 'int', nullable: true })
   budgetid: number;
 
@@ -19,10 +17,4 @@ export class TransactionEntity {
 
   @Column({ type: 'varchar', length: 255 })
   activity: string;
-
-  @CreateDateColumn()
-  created_at: Date;
-
-  @UpdateDateColumn()
-  updated_at: Date;
 }

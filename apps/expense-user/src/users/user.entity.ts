@@ -1,10 +1,8 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntity } from "@app/common-entity"
 
 @Entity({ schema: 'users', name: 'users' })
-export class UserEntity{
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class UserEntity extends BaseEntity{
   @Column({ type: 'varchar', length: 255 })
   name: string;
 
@@ -13,10 +11,4 @@ export class UserEntity{
 
   @Column({ type: 'varchar', length: 255 })
   password: string;
-
-  @CreateDateColumn()
-  created_at: Date;
-
-  @UpdateDateColumn()
-  updated_at: Date;
 }
