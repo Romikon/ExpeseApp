@@ -5,20 +5,11 @@
   "compilerOptions": {
     "deleteOutDir": true,
     "webpack": true,
-    "tsConfigPath": "apps/expense-app/tsconfig.app.json"
+    "tsConfigPath": "apps/expense-budget/tsconfig.json"
   },
   "monorepo": true,
-  "root": "apps/expense-app",
+  "root": "apps/expense-budget",
   "projects": {
-    "expense-app": {
-      "type": "application",
-      "root": "apps/expense-app",
-      "entryFile": "main",
-      "sourceRoot": "apps/expense-app/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/expense-app/tsconfig.app.json"
-      }
-    },
     "expense-user": {
       "type": "application",
       "root": "apps/expense-user",
@@ -26,6 +17,33 @@
       "sourceRoot": "apps/expense-user/src",
       "compilerOptions": {
         "tsConfigPath": "apps/expense-user/tsconfig.app.json"
+      }
+    },
+    "expense-budget": {
+      "type": "application",
+      "root": "apps/expense-budget",
+      "entryFile": "main",
+      "sourceRoot": "apps/expense-budget/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/expense-budget/tsconfig.app.json"
+      }
+    },
+    "expense-category": {
+      "type": "application",
+      "root": "apps/expense-category",
+      "entryFile": "main",
+      "sourceRoot": "apps/expense-category/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/expense-category/tsconfig.app.json"
+      }
+    },
+    "expense-transaction": {
+      "type": "application",
+      "root": "apps/expense-transaction",
+      "entryFile": "main",
+      "sourceRoot": "apps/expense-transaction/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/expense-transaction/tsconfig.app.json"
       }
     },
     "common": {

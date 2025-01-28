@@ -4,17 +4,14 @@
   "description": "<p align=\"center\">   <a href=\"http://nestjs.com/\" target=\"blank\"><img src=\"https://nestjs.com/img/logo-small.svg\" width=\"120\" alt=\"Nest Logo\" /></a> </p>",
   "main": ".eslintrc.js",
   "workspaces": [
-    "apps/expense-transaction",
-    "apps/expense-budget",
-    "apps/expense-category",
-    "apps/expense-user"
+    "apps/*"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:user": "npm run start --workspace=apps/expense-user",
     "start:category": "npm run start --workspace=apps/expense-category",
     "start:transaction": "npm run start --workspace=apps/expense-transaction",
-    "start:budget": "npm run start --workspace=apps/expense-budget",
+    "start:budget": "nest start expense-budget",
     "start:all": "concurrently \"npm run start --workspace=apps/expense-transaction\" \"npm run start --workspace=apps/expense-budget\" \"npm run start --workspace=apps/expense-category\" \"npm run start --workspace=apps/expense-user\"",
     "migration:user": "npm run migration:run --workspace=apps/expense-user",
     "migration:budget": "npm run migration:run --workspace=apps/expense-budget",
