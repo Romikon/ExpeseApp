@@ -32,12 +32,16 @@ export class BudgetService {
   }
 
   async updateBudget(id: number, updateBudget: UpdateBudgetDto): Promise<UpdateBudgetDto> {
-    const ifBudgetExist = await this.budgetRepository.findOne({ where: { id } })
+    const budgetExist = await this.budgetRepository.findOne({ where: { id } });
+    const { name, currency } = updateBudget;
 
-    if (ifBudgetExist)
-      return this.budgetRepository.save(updateBudget)
+    if (!budgetExist)
+      throw new Error('Budget didnt exist!');
+      
+    budgetExist.name = name;
+    budgetExist.currency = currency
+    return this.budgetRepository.save(budgetExist)
     
-    return ifBudgetExist
   }
 
   deleteBudet(id: number): Promise<DeleteResult>{
