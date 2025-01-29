@@ -1,7 +1,7 @@
 import * as amqp from 'amqplib';
 import { CategoryService } from '../category/category.service';
 import { Config } from '../config/config'
-import { CategoryFromRabbitMQDto } from '../dto/dto';
+import { CategoryFromRabbitMQDto } from '../dto/index';
 import { Injectable, OnModuleInit } from '@nestjs/common';
 
 @Injectable()

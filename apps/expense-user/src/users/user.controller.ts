@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Param, Put, Delete, Query, UseInterceptors } from '@nestjs/common';
 import { UserService } from './user.service';
-import { PaginationDto, CreateUserDto, GetUserDto, UpdateUserDto } from '../dto/dto';
+import { PaginationDto, CreateUserDto, GetUserDto, UpdateUserDto } from '../dto/index';
 import { DeleteResult } from 'typeorm';
 import { LoggerInterceptor } from '../logger/logger';
 import { ApiTags } from '@nestjs/swagger';

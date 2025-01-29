@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseInterceptors } from '@nestjs/common';
 import { BudgetService } from './budget.service';
-import { UpdateBudgetDto, CreateBudgetDto, PaginationDto, GetBudgetDto } from '../dto/dto';
+import { UpdateBudgetDto, CreateBudgetDto, PaginationDto, GetBudgetDto } from '../dto/index';
 import { DeleteResult } from 'typeorm';
 import { LoggerInterceptor } from '../logger/logger';
 import { ApiTags } from '@nestjs/swagger';

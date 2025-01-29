@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
 import { BudgetEntity } from './budget.entity';
-import { CreateBudgetDto, PaginationDto, UpdateBudgetDto, GetBudgetDto } from '../dto/dto';
+import { CreateBudgetDto, PaginationDto, UpdateBudgetDto, GetBudgetDto } from '../dto/index';
 
 @Injectable()
 export class BudgetService {
@@ -23,13 +23,10 @@ export class BudgetService {
   }
 
   async createBudget(createBudgetDto: CreateBudgetDto): Promise<CreateBudgetDto> {
-
     const { name, currency } = createBudgetDto
     const month = new Date().toLocaleString('en-US', { month: 'long' });
 
-    const budget = this.budgetRepository.create({ name, currency, month})
-
-    return this.budgetRepository.save(budget)
+    return this.budgetRepository.save(this.budgetRepository.create({ name, currency, month}))
   }
 
   async updateBudget(id: number, updateBudgetDto: UpdateBudgetDto): Promise<UpdateBudgetDto> {

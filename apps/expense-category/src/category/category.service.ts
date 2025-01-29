@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CategoryEntity } from './category.entity';
 import { DeleteResult, Repository } from 'typeorm';
-import { CreateCategoryDto, CategoryFromRabbitMQDto, PaginationDto, UpdateCategoryDto, GetCategoryDto } from '../dto/dto';
+import { CreateCategoryDto, CategoryFromRabbitMQDto, PaginationDto, UpdateCategoryDto, GetCategoryDto } from '../dto/index';
 
 @Injectable()
 export class CategoryService {
@@ -32,16 +32,13 @@ export class CategoryService {
       description = `An expense of ${categoryFromRabbitMQDto.sum} has been recorded under the ${categoryFromRabbitMQDto.activity} category.`;
     }
         
-    const transaction = this.categoryReposetory.create({ name: activity, type, description })
-    return this.categoryReposetory.save(transaction)
-    
+    return this.categoryReposetory.save(this.categoryReposetory.create({ name: activity, type, description }))
   }
 
   createCategory(createCategoryDto: CreateCategoryDto): Promise<CreateCategoryDto> {
     const { name, type, description } = createCategoryDto
-    const transaction = this.categoryReposetory.create({ name, type, description })
 
-    return this.categoryReposetory.save(transaction)
+    return this.categoryReposetory.save(this.categoryReposetory.create({ name, type, description }))
   }
 
   async updateCategory(id: number, updateCategoryDto: UpdateCategoryDto): Promise<UpdateCategoryDto> {

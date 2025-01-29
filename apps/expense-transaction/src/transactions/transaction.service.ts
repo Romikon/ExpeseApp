@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TransactionEntity } from './transaction.entity';
 import { DeleteResult, Repository } from 'typeorm';
-import { PaginationDto, CreateTransactionDto, GetTransactionDto, UpdateTransactionDto } from '../dto/dto';
+import { PaginationDto, CreateTransactionDto, GetTransactionDto, UpdateTransactionDto } from '../dto/index';
 import { CloudAMQP } from '../amqp/amqp';
 
 @Injectable()
@@ -26,10 +26,9 @@ export class TransactionService {
 
   async createTransaction(createTransactionDto: CreateTransactionDto): Promise<CreateTransactionDto> {
     const { budgetid, categoryid, type, sum, activity } = createTransactionDto
-    const transaction = await this.transactionReposetory.create({ budgetid, categoryid, type, sum, activity })
     await this.cloudAMQP.sendMessage({ type: type, sum: sum, activity: activity })
 
-    return this.transactionReposetory.save(transaction)
+    return this.transactionReposetory.save(this.transactionReposetory.create({ budgetid, categoryid, type, sum, activity }))
   }
 
   async updateTransaction(id: number, updateTransactionDto: UpdateTransactionDto): Promise<UpdateTransactionDto> {

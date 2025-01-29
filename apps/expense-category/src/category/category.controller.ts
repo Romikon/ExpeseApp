@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseInterceptors } from '@nestjs/common';
 import { CategoryService } from './category.service';
-import { CreateCategoryDto, PaginationDto, UpdateCategoryDto , GetCategoryDto } from '../dto/dto';
+import { CreateCategoryDto, PaginationDto, UpdateCategoryDto , GetCategoryDto } from '../dto/index';
 import { DeleteResult } from 'typeorm';
 import { LoggerInterceptor } from '../logger/logger';
 import { ApiTags } from '@nestjs/swagger';
