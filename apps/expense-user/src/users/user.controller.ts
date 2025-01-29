@@ -2,8 +2,10 @@ import { Controller, Get, Post, Body, Param, Put, Delete, Query, UseInterceptors
 import { UserService } from './user.service';
 import { PaginationDto, CreateUserDto, GetUserDto, UpdateUserDto } from '../dto/dto';
 import { DeleteResult } from 'typeorm';
-import { LoggerInterceptor } from 'src/logger/logger';
+import { LoggerInterceptor } from '../logger/logger';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('User')
 @Controller('user')
 @UseInterceptors(LoggerInterceptor)
 export class UserController {

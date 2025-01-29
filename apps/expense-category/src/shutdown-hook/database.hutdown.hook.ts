@@ -1,6 +1,6 @@
 import { Injectable, OnApplicationShutdown } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { dataSourceOptions } from 'db/data-source';
+import { dataSourceOptions } from '../../db/data-source';
 
 @Injectable()
 export class DatabaseService implements OnApplicationShutdown {

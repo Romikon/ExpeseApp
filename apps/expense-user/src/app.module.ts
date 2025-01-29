@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { UserModule } from './users/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { dataSourceOptions } from 'db/data-source';
+import { dataSourceOptions } from '../db/data-source';
 import { HealthModule } from './health';
 import { DatabaseService } from './shutdown-hook/database.shutdown.hook';
 import { LoggerModule } from 'nestjs-pino';

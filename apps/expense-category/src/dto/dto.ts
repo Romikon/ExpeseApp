@@ -1,28 +1,53 @@
-import { IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 class CreateCategoryDto {
+  @ApiProperty({
+    example: 'Roman',
+    required: true
+   })
   @IsString()
   @IsNotEmpty()
   name: string;
 
+  @ApiProperty({
+    example: 'income',
+    required: true
+   })
   @IsString()
   @IsNotEmpty()
   type: string;
 
+  @ApiProperty({
+    example: 'Description',
+    required: true
+   })
   @IsString()
   @IsNotEmpty()
   description: string;
 }
 
 class UpdateCategoryDto{
+  @ApiProperty({
+    example: 'Roman',
+    required: true
+   })
   @IsString()
   @IsOptional()
   name?: string;
 
+  @ApiProperty({
+    example: 'income',
+    required: true
+   })
   @IsString()
   @IsOptional()
   type?: string;
 
+  @ApiProperty({
+    example: 'Description',
+    required: true
+   })
   @IsString()
   @IsOptional()
   description?: string;

@@ -1,14 +1,14 @@
 import { Injectable, OnApplicationShutdown } from '@nestjs/common';
 import { ClientProxy, Client, Transport } from '@nestjs/microservices';
-import config from '../config/config';
+import { Config } from '../config/config';
 
 @Injectable()
 export class RabbitMQService implements OnApplicationShutdown {
   @Client({
     transport: Transport.RMQ,
     options: {
-      urls: [config.rabbitMQUrl],
-      queue: config.rabbitMQQueue,
+      urls: [Config().rabbitMQUrl],
+      queue: Config().rabbitMQQueue,
     },
   })
   private client: ClientProxy;

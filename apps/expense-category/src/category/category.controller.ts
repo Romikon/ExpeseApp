@@ -2,8 +2,10 @@ import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseInterceptors
 import { CategoryService } from './category.service';
 import { CreateCategoryDto, PaginationDto, UpdateCategoryDto , GetCategoryDto } from '../dto/dto';
 import { DeleteResult } from 'typeorm';
-import { LoggerInterceptor } from 'src/logger/logger';
+import { LoggerInterceptor } from '../logger/logger';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Category')
 @Controller('category')
 @UseInterceptors(LoggerInterceptor)
 export class CategoryController {

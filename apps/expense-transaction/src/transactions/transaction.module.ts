@@ -4,11 +4,11 @@ import { TransactionService } from './transaction.service';
 import { TransactionEntity } from './transaction.entity';
 import { TransactionController } from './transaction.controller';
 import { CloudAMQP } from '../amqp/amqp';
-import { typeOrmConfig } from '../config/config';
+import { Config } from '../config/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(typeOrmConfig),
+    TypeOrmModule.forRoot(Config().typeOrmConfig),
   TypeOrmModule.forFeature([TransactionEntity]),
   ],
   controllers: [TransactionController],

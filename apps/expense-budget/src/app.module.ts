@@ -11,7 +11,6 @@ import { Config } from '../src/config/config';
     ConfigModule.forRoot({
       isGlobal: true,
       load: [Config],
-      //envFilePath: ['config/copy-trading/copy-trading.env'],
     }),
     BudgetModule,
     HealthModule,
