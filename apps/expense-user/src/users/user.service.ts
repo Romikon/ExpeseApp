@@ -13,6 +13,7 @@ export class UserService {
 
   async getUsers(paginationDto: PaginationDto): Promise<GetUserDto[]> {
     const { page, size } = paginationDto
+    //check if request contain pagination then return with pagination statement
     if (typeof(page) !== 'undefined' && typeof(size) !== 'undefined'){
 
       return this.userRepository.find({ skip: (page - 1) * size, take: size });

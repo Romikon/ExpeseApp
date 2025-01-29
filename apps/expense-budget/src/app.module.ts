@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { BudgetModule } from './budget/budget.module';
-import { HealthModule } from './health';
 import { DatabaseService } from './shutdown-hook/database.hutdown.hook';
 import { LoggerModule } from 'nestjs-pino';
 import { ConfigModule } from '@nestjs/config';
 import { Config } from '../src/config/config';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [

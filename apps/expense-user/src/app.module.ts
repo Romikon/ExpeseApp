@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { UserModule } from './users/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSourceOptions } from '../db/data-source';
-import { HealthModule } from './health';
 import { DatabaseService } from './shutdown-hook/database.shutdown.hook';
 import { LoggerModule } from 'nestjs-pino';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot(dataSourceOptions),

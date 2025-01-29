@@ -13,6 +13,7 @@ export class CategoryService {
 
   getCategories(paginationDto: PaginationDto): Promise<GetCategoryDto[]> {
     const { page, size } = paginationDto
+    //check if request contain pagination then return with pagination statement
     if (typeof(page) !== 'undefined' && typeof(size) !== 'undefined'){
       
       return this.categoryReposetory.find({ skip: (page - 1) * size, take: size });

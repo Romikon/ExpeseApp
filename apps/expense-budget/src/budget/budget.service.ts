@@ -13,6 +13,7 @@ export class BudgetService {
 
   getBudgets(paginationDto: PaginationDto): Promise<GetBudgetDto[]> {
     const { page, size } = paginationDto
+    //check if request contain pagination then return with pagination statement
     if (typeof(page) !== 'undefined' && typeof(size) !== 'undefined'){
 
       return this.budgetRepository.find({ skip: (page - 1) * size, take: size });

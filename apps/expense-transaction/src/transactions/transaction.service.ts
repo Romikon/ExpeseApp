@@ -15,6 +15,7 @@ export class TransactionService {
 
   getTransactions(paginationDto: PaginationDto): Promise<GetTransactionDto[]> {
     const { page, size } = paginationDto
+    //check if request contain pagination then return with pagination statement
     if (typeof(page) !== 'undefined' && typeof(size) !== 'undefined'){
       
       return this.transactionReposetory.find({ skip: (page - 1) * size, take: size });

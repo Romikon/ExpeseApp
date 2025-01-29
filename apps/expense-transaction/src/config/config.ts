@@ -16,6 +16,7 @@ export const Config = () => {
       dbSchema: process.env.DB_SCHEMA,
       rabbitMQUrl: process.env.RABBITMQ_URL,
       rabbitMQQueue: process.env.RABBITMQ_QUEUE,
+      Host: process.env.HOST,
       typeOrmConfig: {
         type: 'postgres',
         host: process.env.DB_HOST,
