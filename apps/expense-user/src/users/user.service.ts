@@ -11,8 +11,8 @@ export class UserService {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  async getUsers(pagination: PaginationDto): Promise<GetUserDto[]> {
-    const { page, size } = pagination
+  async getUsers(paginationDto: PaginationDto): Promise<GetUserDto[]> {
+    const { page, size } = paginationDto
     if (typeof(page) !== 'undefined' && typeof(size) !== 'undefined'){
 
       return this.userRepository.find({ skip: (page - 1) * size, take: size });
@@ -20,16 +20,16 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  async createUser(newUser: CreateUserDto): Promise<CreateUserDto> {
-    const { name, email, password } = newUser
+  async createUser(createUserDto: CreateUserDto): Promise<CreateUserDto> {
+    const { name, email, password } = createUserDto
     const User = this.userRepository.create({ name, email, password });
 
     return this.userRepository.save(User);
   }
 
-  async updateUser(id: number, updateUser: UpdateUserDto): Promise<UpdateUserDto> {
+  async updateUser(id: number, updateUserDto: UpdateUserDto): Promise<UpdateUserDto> {
     const userExist = await this.userRepository.findOne({ where: { id }});
-    const { name, email, password } = updateUser;
+    const { name, email, password } = updateUserDto;
     
     if (!userExist)
       throw new Error('User didnt exist!')

@@ -13,8 +13,8 @@ export class TransactionService {
     private transactionReposetory: Repository<TransactionEntity>
   ) {}
 
-  getTransactions(pagination: PaginationDto): Promise<GetTransactionDto[]> {
-    const { page, size } = pagination
+  getTransactions(paginationDto: PaginationDto): Promise<GetTransactionDto[]> {
+    const { page, size } = paginationDto
     if (typeof(page) !== 'undefined' && typeof(size) !== 'undefined'){
       
       return this.transactionReposetory.find({ skip: (page - 1) * size, take: size });
@@ -23,17 +23,17 @@ export class TransactionService {
     return this.transactionReposetory.find();
   }
 
-  async createTransaction(newTransaction: CreateTransactionDto): Promise<CreateTransactionDto> {
-    const { budgetid, categoryid, type, sum, activity } = newTransaction
+  async createTransaction(createTransactionDto: CreateTransactionDto): Promise<CreateTransactionDto> {
+    const { budgetid, categoryid, type, sum, activity } = createTransactionDto
     const transaction = await this.transactionReposetory.create({ budgetid, categoryid, type, sum, activity })
     await this.cloudAMQP.sendMessage({ type: type, sum: sum, activity: activity })
 
     return this.transactionReposetory.save(transaction)
   }
 
-  async updateTransaction(id: number, updateTransaction: UpdateTransactionDto): Promise<UpdateTransactionDto> {
+  async updateTransaction(id: number, updateTransactionDto: UpdateTransactionDto): Promise<UpdateTransactionDto> {
     const transactionExist = await this.transactionReposetory.findOne({ where: { id }});
-    const { budgetid, categoryid, type, sum, activity } = updateTransaction;
+    const { budgetid, categoryid, type, sum, activity } = updateTransactionDto;
     
     if (!transactionExist)
       throw new Error('Transaction didnt exist!');

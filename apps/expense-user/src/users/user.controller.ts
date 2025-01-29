@@ -12,18 +12,18 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  getAllUsers(@Query() pagination: PaginationDto): Promise<GetUserDto[]> {
-    return this.userService.getUsers(pagination);
+  getAllUsers(@Query() paginationDto: PaginationDto): Promise<GetUserDto[]> {
+    return this.userService.getUsers(paginationDto);
   }
 
   @Post()
-  addUser(@Body() newUser: CreateUserDto): Promise<CreateUserDto> {
-    return this.userService.createUser(newUser);
+  addUser(@Body() createUserDto: CreateUserDto): Promise<CreateUserDto> {
+    return this.userService.createUser(createUserDto);
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() updateUser: UpdateUserDto): Promise<UpdateUserDto> {
-    return this.userService.updateUser(id, updateUser);
+  update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto): Promise<UpdateUserDto> {
+    return this.userService.updateUser(id, updateUserDto);
   }
 
   @Delete(':id')

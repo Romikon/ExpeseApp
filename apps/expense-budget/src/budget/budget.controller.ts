@@ -12,19 +12,18 @@ export class BudgetController {
   constructor(private readonly budgetService: BudgetService) {}
 
   @Get()
-  getBudgets(@Query() pagination: PaginationDto): Promise<GetBudgetDto[]>{
-    return this.budgetService.getBudgets(pagination);
+  getBudgets(@Query() paginationDto: PaginationDto): Promise<GetBudgetDto[]>{
+    return this.budgetService.getBudgets(paginationDto);
   }
 
   @Post()
-  async createBudget(@Body() newBudget: CreateBudgetDto): Promise<CreateBudgetDto> {
-    const createdBudget = await this.budgetService.createBudget(newBudget)
-    return createdBudget
+  async createBudget(@Body() createBudgetDto: CreateBudgetDto): Promise<CreateBudgetDto> {
+    return this.budgetService.createBudget(createBudgetDto)
   }
 
   @Put(':id')
-  updateBudget(@Param('id') id: number, @Body() updateBudget: UpdateBudgetDto): Promise<UpdateBudgetDto> {
-    return this.budgetService.updateBudget(id, updateBudget)
+  updateBudget(@Param('id') id: number, @Body() updateBudgetDto: UpdateBudgetDto): Promise<UpdateBudgetDto> {
+    return this.budgetService.updateBudget(id, updateBudgetDto)
   }
 
   @Delete(':id')

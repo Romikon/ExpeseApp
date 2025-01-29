@@ -12,18 +12,18 @@ export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 
   @Get()
-  getTransactions(@Query() pagination: PaginationDto): Promise<GetTransactionDto[]> {
-    return this.transactionService.getTransactions(pagination);
+  getTransactions(@Query() paginationDto: PaginationDto): Promise<GetTransactionDto[]> {
+    return this.transactionService.getTransactions(paginationDto);
   }
 
   @Post()
-  createTransaction(@Body() newTransaction: CreateTransactionDto): Promise<CreateTransactionDto> {
-    return this.transactionService.createTransaction(newTransaction)
+  createTransaction(@Body() createTransactionDto: CreateTransactionDto): Promise<CreateTransactionDto> {
+    return this.transactionService.createTransaction(createTransactionDto)
   }
 
   @Put(':id')
-  updateTransaction(@Param('id') id: number, @Body() updateTransaction: UpdateTransactionDto): Promise<UpdateTransactionDto>{
-    return this.transactionService.updateTransaction(id, updateTransaction)
+  updateTransaction(@Param('id') id: number, @Body() updateTransactionDto: UpdateTransactionDto): Promise<UpdateTransactionDto>{
+    return this.transactionService.updateTransaction(id, updateTransactionDto)
   }
 
   @Delete(':id')

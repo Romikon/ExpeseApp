@@ -12,18 +12,18 @@ export class CategoryController {
   constructor(private readonly transactionService: CategoryService) {}
 
   @Get()
-  getCategories(@Query() pagination: PaginationDto): Promise<GetCategoryDto[]> {
-    return this.transactionService.getCategories(pagination);
+  getCategories(@Query() paginationDto: PaginationDto): Promise<GetCategoryDto[]> {
+    return this.transactionService.getCategories(paginationDto);
   }
 
   @Post()
-  createCategory(@Body() newCategory: CreateCategoryDto): Promise<CreateCategoryDto> {
-    return this.transactionService.createCategory(newCategory)
+  createCategory(@Body() createCategoryDto: CreateCategoryDto): Promise<CreateCategoryDto> {
+    return this.transactionService.createCategory(createCategoryDto)
   }
 
   @Put(':id')
-  updateCategory(@Param('id') id: number, @Body() updateCategory: UpdateCategoryDto): Promise<UpdateCategoryDto> {
-    return this.transactionService.updateCategory(id, updateCategory)
+  updateCategory(@Param('id') id: number, @Body() updateCategoryDto: UpdateCategoryDto): Promise<UpdateCategoryDto> {
+    return this.transactionService.updateCategory(id, updateCategoryDto)
   }
 
   @Delete(':id')

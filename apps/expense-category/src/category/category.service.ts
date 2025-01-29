@@ -11,8 +11,8 @@ export class CategoryService {
     private categoryReposetory: Repository<CategoryEntity>
   ) {}
 
-  getCategories(pagination: PaginationDto): Promise<GetCategoryDto[]> {
-    const { page, size } = pagination
+  getCategories(paginationDto: PaginationDto): Promise<GetCategoryDto[]> {
+    const { page, size } = paginationDto
     if (typeof(page) !== 'undefined' && typeof(size) !== 'undefined'){
       
       return this.categoryReposetory.find({ skip: (page - 1) * size, take: size });
@@ -21,14 +21,14 @@ export class CategoryService {
     return this.categoryReposetory.find()
   }
 
-  createCategoryFromRabbitMQ(data: CategoryFromRabbitMQDto): Promise<CreateCategoryDto> {
-    const { activity, type } = data
+  createCategoryFromRabbitMQ(categoryFromRabbitMQDto: CategoryFromRabbitMQDto): Promise<CreateCategoryDto> {
+    const { activity, type } = categoryFromRabbitMQDto
     let description
     
-    if (data.type === 'income') {
-      description = `An income of ${data.sum} has been received under the ${data.activity} category.`;
+    if (categoryFromRabbitMQDto.type === 'income') {
+      description = `An income of ${categoryFromRabbitMQDto.sum} has been received under the ${categoryFromRabbitMQDto.activity} category.`;
     } else {
-      description = `An expense of ${data.sum} has been recorded under the ${data.activity} category.`;
+      description = `An expense of ${categoryFromRabbitMQDto.sum} has been recorded under the ${categoryFromRabbitMQDto.activity} category.`;
     }
         
     const transaction = this.categoryReposetory.create({ name: activity, type, description })
@@ -36,16 +36,16 @@ export class CategoryService {
     
   }
 
-  createCategory(newCategory: CreateCategoryDto): Promise<CreateCategoryDto> {
-    const { name, type, description } = newCategory
+  createCategory(createCategoryDto: CreateCategoryDto): Promise<CreateCategoryDto> {
+    const { name, type, description } = createCategoryDto
     const transaction = this.categoryReposetory.create({ name, type, description })
 
     return this.categoryReposetory.save(transaction)
   }
 
-  async updateCategory(id: number, updateCategory: UpdateCategoryDto): Promise<UpdateCategoryDto> {
+  async updateCategory(id: number, updateCategoryDto: UpdateCategoryDto): Promise<UpdateCategoryDto> {
     const categoryExist = await this.categoryReposetory.findOne({ where: { id }})
-    const { name, type, description } = updateCategory;
+    const { name, type, description } = updateCategoryDto;
 
     if (!categoryExist)
       throw new Error('Category didnt exist!')
