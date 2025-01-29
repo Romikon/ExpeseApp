@@ -1,10 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity({ schema: 'category', name: 'category' })
-export class ICategory {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class CategoryEntity extends BaseEntity{
   @Column({ type: 'varchar', length: 255 })
   name: string;
 
@@ -13,5 +10,4 @@ export class ICategory {
 
   @Column({ type: 'varchar', length: 255 })
   description: string;
-
 }

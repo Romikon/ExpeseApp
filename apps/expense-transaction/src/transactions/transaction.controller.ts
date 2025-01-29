@@ -1,27 +1,33 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseInterceptors } from '@nestjs/common';
 import { TransactionService } from './transaction.service';
+import { PaginationDto, CreateTransactionDto, GetTransactionDto, UpdateTransactionDto } from '../dto/dto';
+import { DeleteResult } from 'typeorm';
+import { LoggerInterceptor } from '../logger/logger';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Transaction')
 @Controller('transactions')
+@UseInterceptors(LoggerInterceptor)
 export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 
   @Get()
-  getTransactions(){
-    return this.transactionService.getTransactions();
+  getTransactions(@Query() pagination: PaginationDto): Promise<GetTransactionDto[]> {
+    return this.transactionService.getTransactions(pagination);
   }
 
   @Post()
-  createTransaction(@Body('budgetid') budgetid: number, @Body('categoryid') categoryid: number, @Body('type') type: string, @Body('sum') sum: number, @Body('activity') activity: string) {
-    return this.transactionService.createTransaction(budgetid, categoryid, type, sum, activity)
+  createTransaction(@Body() newTransaction: CreateTransactionDto): Promise<CreateTransactionDto> {
+    return this.transactionService.createTransaction(newTransaction)
   }
 
   @Put(':id')
-  updateTransaction(@Param('id') id: number, @Body('budgetid') budgetid: number, @Body('categoryid') categoryid: number, @Body('type') type: string, @Body('sum') sum: number, @Body('activity') activity: string){
-    this.transactionService.updateTransaction(id, categoryid, budgetid, type, sum, activity)
+  updateTransaction(@Param('id') id: number, @Body() updateTransaction: UpdateTransactionDto): Promise<UpdateTransactionDto>{
+    return this.transactionService.updateTransaction(id, updateTransaction)
   }
 
   @Delete(':id')
-  deleteTransaction(@Param('id') id: number){
-    this.transactionService.deleteTransaction(id)
+  deleteTransaction(@Param('id') id: number): Promise<DeleteResult>{
+    return this.transactionService.deleteTransaction(id)
   }
 }

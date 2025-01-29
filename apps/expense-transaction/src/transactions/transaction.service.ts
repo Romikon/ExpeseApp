@@ -1,49 +1,53 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ITransaction } from './transaction.entity';
-import { Repository } from 'typeorm';
-import * as amqp from 'amqplib';
+import { TransactionEntity } from './transaction.entity';
+import { DeleteResult, Repository } from 'typeorm';
+import { PaginationDto, CreateTransactionDto, GetTransactionDto, UpdateTransactionDto } from '../dto/dto';
+import { CloudAMQP } from '../amqp/amqp';
 
 @Injectable()
 export class TransactionService {
-  private connection: amqp.Connection;
-  private channel: amqp.Channel;
-  private readonly queue = 'writeAddictionalInfo';
-  private readonly rabbitmqUrl = 'amqps://wnobioyl:ykNP9ryF9Zyb_EjxntfDy17IcnyLLirN@hawk.rmq.cloudamqp.com/wnobioyl';
   constructor(
-    @InjectRepository(ITransaction)
-    private transactionReposetory: Repository<ITransaction>
+    private cloudAMQP: CloudAMQP,
+    @InjectRepository(TransactionEntity)
+    private transactionReposetory: Repository<TransactionEntity>
   ) {}
 
-  async connect() {
-    this.connection = await amqp.connect(this.rabbitmqUrl);
-    this.channel = await this.connection.createChannel();
-    await this.channel.assertQueue(this.queue);
-  }
-
-  async sendMessage(message: any) {
-    const messageBuffer = Buffer.from(JSON.stringify(message));
-    this.channel.sendToQueue(this.queue, messageBuffer);
-    console.log(message)
-  }
-
-  getTransactions(){
+  getTransactions(pagination: PaginationDto): Promise<GetTransactionDto[]> {
+    const { page, size } = pagination
+    if (typeof(page) !== 'undefined' && typeof(size) !== 'undefined'){
+      
+      return this.transactionReposetory.find({ skip: (page - 1) * size, take: size });
+    }
+    
     return this.transactionReposetory.find();
   }
 
-  async createTransaction(budgetid: number, categoryid: number, type: string, sum: number, activity: string){
+  async createTransaction(newTransaction: CreateTransactionDto): Promise<CreateTransactionDto> {
+    const { budgetid, categoryid, type, sum, activity } = newTransaction
     const transaction = await this.transactionReposetory.create({ budgetid, categoryid, type, sum, activity })
-
-    await this.sendMessage({ type: type, sum: sum, activity: activity })
+    await this.cloudAMQP.sendMessage({ type: type, sum: sum, activity: activity })
 
     return this.transactionReposetory.save(transaction)
   }
 
-  updateTransaction(id: number, budgetid: number, categoryid: number, type: string, sum: number, activity: string){
-    return this.transactionReposetory.update(id, {budgetid, categoryid, type, sum, activity})
+  async updateTransaction(id: number, updateTransaction: UpdateTransactionDto): Promise<UpdateTransactionDto> {
+    const transactionExist = await this.transactionReposetory.findOne({ where: { id }});
+    const { budgetid, categoryid, type, sum, activity } = updateTransaction;
+    
+    if (!transactionExist)
+      throw new Error('Transaction didnt exist!');
+
+    transactionExist.budgetid = budgetid;
+    transactionExist.categoryid = categoryid;
+    transactionExist.type = type;
+    transactionExist.sum = sum;
+    transactionExist.activity = activity;
+    return this.transactionReposetory.save(transactionExist)
+
   }
 
-  deleteTransaction(id: number){
-    this.transactionReposetory.delete(id)
+  deleteTransaction(id: number): Promise<DeleteResult>{
+    return this.transactionReposetory.delete(id)
   }
 }

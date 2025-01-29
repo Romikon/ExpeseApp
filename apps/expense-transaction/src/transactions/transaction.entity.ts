@@ -1,10 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
-@Entity({ schema: 'info', name: 'info' })
-export class ITransaction {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+@Entity({ schema: 'transactions', name: 'transactions' })
+export class TransactionEntity extends BaseEntity{
   @Column({ type: 'int', nullable: true })
   budgetid: number;
 
@@ -19,5 +16,4 @@ export class ITransaction {
 
   @Column({ type: 'varchar', length: 255 })
   activity: string;
-
 }

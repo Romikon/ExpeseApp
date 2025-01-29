@@ -1,23 +1,17 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TransactionService } from './transaction.service';
-import { ITransaction } from './transaction.entity';
+import { TransactionEntity } from './transaction.entity';
 import { TransactionController } from './transaction.controller';
+import { CloudAMQP } from '../amqp/amqp';
+import { Config } from '../config/config';
 
 @Module({
-  imports: [TypeOrmModule.forRoot({
-    type: 'postgres',
-    host: 'localhost',
-    port: 5432,
-    username: 'roman1',
-    password: '123123',
-    database: 'budget',
-    entities: [ITransaction],
-    synchronize: true,
-  }),
-  TypeOrmModule.forFeature([ITransaction]),
+  imports: [
+    TypeOrmModule.forRoot(Config().typeOrmConfig),
+  TypeOrmModule.forFeature([TransactionEntity]),
   ],
   controllers: [TransactionController],
-  providers: [TransactionService],
+  providers: [TransactionService, CloudAMQP],
 })
 export class TransactionModule {}

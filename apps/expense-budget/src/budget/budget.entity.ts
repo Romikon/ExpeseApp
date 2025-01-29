@@ -1,10 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+<<<<<<< HEAD
+import { Entity, Column } from 'typeorm';
+import { BaseEntity } from "@app/common-entity"
+=======
+import { Entity, Column } from 'typeorm'
+import { BaseEntity } from '../../../../common/base.entity';
+>>>>>>> issue-fixing
 
 @Entity({ schema: 'budget', name: 'budget' })
-export class IBudget {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class BudgetEntity extends BaseEntity{
   @Column({ nullable: true })
   name: string;
 
@@ -13,16 +16,4 @@ export class IBudget {
 
   @Column({ nullable: true })
   month: string;
-}
-
-@Entity({ schema: 'budget', name: 'budget' })
-export class IUpdateBudget {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column({ nullable: true })
-  name: string;
-
-  @Column({ nullable: true })
-  currency: string;
 }

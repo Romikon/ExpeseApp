@@ -1,65 +1,62 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ICategory } from './category.entity';
-import { Repository } from 'typeorm';
-import * as amqp from 'amqplib';
+import { CategoryEntity } from './category.entity';
+import { DeleteResult, Repository } from 'typeorm';
+import { CreateCategoryDto, CategoryFromRabbitMQDto, PaginationDto, UpdateCategoryDto, GetCategoryDto } from '../dto/dto';
 
 @Injectable()
 export class CategoryService {
-  private connection: amqp.Connection;
-  private channel: amqp.Channel;
-  private readonly queue = 'writeAddictionalInfo';
-  private readonly rabbitmqUrl = 'amqps://wnobioyl:ykNP9ryF9Zyb_EjxntfDy17IcnyLLirN@hawk.rmq.cloudamqp.com/wnobioyl';
-
   constructor(
-    @InjectRepository(ICategory)
-    private transactionReposetory: Repository<ICategory>
+    @InjectRepository(CategoryEntity)
+    private categoryReposetory: Repository<CategoryEntity>
   ) {}
 
-  async onModuleInit() {
-    this.connection = await amqp.connect(this.rabbitmqUrl);
-    this.channel = await this.connection.createChannel();
-    await this.channel.assertQueue(this.queue);
-
-    this.channel.consume(this.queue, async (msg) => {
-      const data = JSON.parse(msg.content.toString());
+  getCategories(pagination: PaginationDto): Promise<GetCategoryDto[]> {
+    const { page, size } = pagination
+    if (typeof(page) !== 'undefined' && typeof(size) !== 'undefined'){
       
-      let description
+      return this.categoryReposetory.find({ skip: (page - 1) * size, take: size });
+    }
 
-      console.log(data.type)
-
-      if(data.type == 'income'){
-        description = `income was received in the amount ${data.sum} of ${data.activity} category`
-      }
-      else{
-        description = `expenses in the amount of ${data.sum} of ${data.activity} category`
-      }
-
-      const createdInfo = this.transactionReposetory.create({
-        name: data.activity,
-        type: data.type,
-        description: description
-      });
-
-      return this.transactionReposetory.save(createdInfo)
-    });
+    return this.categoryReposetory.find()
   }
 
-  getCategories(){
-    return this.transactionReposetory.find();
+  createCategoryFromRabbitMQ(data: CategoryFromRabbitMQDto): Promise<CreateCategoryDto> {
+    const { activity, type } = data
+    let description
+    
+    if (data.type === 'income') {
+      description = `An income of ${data.sum} has been received under the ${data.activity} category.`;
+    } else {
+      description = `An expense of ${data.sum} has been recorded under the ${data.activity} category.`;
+    }
+        
+    const transaction = this.categoryReposetory.create({ name: activity, type, description })
+    return this.categoryReposetory.save(transaction)
+    
   }
 
-  createCategory(name: string, type: string, description: string){
-    const transaction = this.transactionReposetory.create({name, type, description})
+  createCategory(newCategory: CreateCategoryDto): Promise<CreateCategoryDto> {
+    const { name, type, description } = newCategory
+    const transaction = this.categoryReposetory.create({ name, type, description })
 
-    return this.transactionReposetory.save(transaction)
+    return this.categoryReposetory.save(transaction)
   }
 
-  updateCategory(id: number, name: string, type: string, description: string){
-    return this.transactionReposetory.update(id, {name, type, description})
+  async updateCategory(id: number, updateCategory: UpdateCategoryDto): Promise<UpdateCategoryDto> {
+    const categoryExist = await this.categoryReposetory.findOne({ where: { id }})
+    const { name, type, description } = updateCategory;
+
+    if (!categoryExist)
+      throw new Error('Category didnt exist!')
+
+    categoryExist.name = name;
+    categoryExist.type = type;
+    categoryExist.description = description;
+    return this.categoryReposetory.save(categoryExist)
   }
 
-  deleteCategory(id: number){
-    this.transactionReposetory.delete(id)
+  deleteCategory(id: number): Promise<DeleteResult>{
+    return this.categoryReposetory.delete(id);
   }
 }

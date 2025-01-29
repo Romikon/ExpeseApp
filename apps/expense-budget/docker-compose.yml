@@ -1,0 +1,8 @@
+postgres-container:
+    image: postgres
+    container_name: postgres-budget
+    env_file:
+      - .env
+    ports:
+      - "5433:5432"
+    restart: always

@@ -1,0 +1,8 @@
+ postgres-users:
+    image: postgres
+    container_name: postgres-users
+    env_file:
+      - .env
+    ports:
+      - "5434:5432"
+    restart: always

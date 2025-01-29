@@ -1,28 +1,33 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, Query, UseInterceptors } from '@nestjs/common';
 import { UserService } from './user.service';
+import { PaginationDto, CreateUserDto, GetUserDto, UpdateUserDto } from '../dto/dto';
+import { DeleteResult } from 'typeorm';
+import { LoggerInterceptor } from '../logger/logger';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('User')
 @Controller('user')
+@UseInterceptors(LoggerInterceptor)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  getAllUsers() {
-    return this.userService.findAll();
+  getAllUsers(@Query() pagination: PaginationDto): Promise<GetUserDto[]> {
+    return this.userService.getUsers(pagination);
   }
 
   @Post()
-  addUser(@Body('name') name: string, @Body('email') email: string, @Body('password') password: string){
-    return this.userService.createUser(name, email, password);
+  addUser(@Body() newUser: CreateUserDto): Promise<CreateUserDto> {
+    return this.userService.createUser(newUser);
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body('name') name?: string, @Body('email') email?: string, @Body('password') password?: string,
-  ){
-    return this.userService.updateUser(id, name, email, password);
+  update(@Param('id') id: number, @Body() updateUser: UpdateUserDto): Promise<UpdateUserDto> {
+    return this.userService.updateUser(id, updateUser);
   }
 
   @Delete(':id')
-  dalelteUser(@Param('id') id: number){
+  dalelteUser(@Param('id') id: number): Promise<DeleteResult>{
     return this.userService.deleteUser(id);
   }
 }

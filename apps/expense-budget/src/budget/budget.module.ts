@@ -1,24 +1,16 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { IBudget, IUpdateBudget } from './budget.entity';
+import { BudgetEntity } from './budget.entity';
 import { BudgetService } from './budget.service';
-import { AppController } from './budget.controller';
+import { BudgetController } from './budget.controller';
+import { Config } from '../config/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'roman1',
-      password: '123123',
-      database: 'budget',
-      entities: [IBudget, IUpdateBudget],
-      synchronize: true,
-    }),
-    TypeOrmModule.forFeature([IBudget, IUpdateBudget]),
+    TypeOrmModule.forRoot(Config().typeOrmConfig),
+    TypeOrmModule.forFeature([BudgetEntity]),
   ],
-  controllers: [AppController],
+  controllers: [BudgetController],
   providers: [BudgetService],
 })
 export class BudgetModule {}
