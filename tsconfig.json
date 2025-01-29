@@ -17,5 +17,13 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@app/common-entity": [
+        "libs/common-entity/src"
+      ],
+      "@app/common-entity/*": [
+        "libs/common-entity/src/*"
+      ]
+    }
   }
 }

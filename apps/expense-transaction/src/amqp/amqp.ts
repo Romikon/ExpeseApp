@@ -1,11 +1,11 @@
 import * as amqp from 'amqplib';
-import config from '../config/config'
+import { Config } from '../config/config'
 
 export class CloudAMQP  {
   private connection: amqp.Connection;
   private channel: amqp.Channel;
-  private readonly queue = config.rabbitMQQueue;
-  private readonly rabbitmqUrl = config.rabbitMQUrl;
+  private readonly queue = Config().rabbitMQQueue;
+  private readonly rabbitmqUrl = Config().rabbitMQUrl;
 
   async connect() {
       this.connection = await amqp.connect(this.rabbitmqUrl);

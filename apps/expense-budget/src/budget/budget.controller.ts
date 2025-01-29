@@ -3,7 +3,9 @@ import { BudgetService } from './budget.service';
 import { UpdateBudgetDto, CreateBudgetDto, PaginationDto, GetBudgetDto } from '../dto/dto';
 import { DeleteResult } from 'typeorm';
 import { LoggerInterceptor } from '../logger/logger';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Budget')
 @Controller('budget')
 @UseInterceptors(LoggerInterceptor)
 export class BudgetController {

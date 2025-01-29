@@ -7,7 +7,7 @@ import {
   } from '@nestjs/common';
   import { Observable } from 'rxjs';
   import { tap } from 'rxjs/operators';
-import config from '../config/config';
+import { Config } from '../config/config';
   
   @Injectable()
   export class LoggerInterceptor implements NestInterceptor {
@@ -19,14 +19,14 @@ import config from '../config/config';
   
       const now = Date.now();
   
-      this.logger.log(`Incoming request: ${method} http://${config.dbHost}:${config.port}${url}`);
+      this.logger.log(`Incoming request: ${method} http://${Config().dbHost}:${Config().port}${url}`);
   
       return next.handle().pipe(
         tap(() => {
           const elapsedTime = Date.now() - now;
   
           this.logger.log(
-            `Response for ${method} http://${config.dbHost}:${config.port}${url} completed in ${elapsedTime}ms`,
+            `Response for ${method} http://${Config().dbHost}:${Config().port}${url} completed in ${elapsedTime}ms`,
           );
         }),
       );

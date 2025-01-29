@@ -1,5 +1,4 @@
-import { Entity, Column } from 'typeorm';
-import { BaseEntity } from '../../../../common/base.entity';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity({ schema: 'transactions', name: 'transactions' })
 export class TransactionEntity extends BaseEntity{

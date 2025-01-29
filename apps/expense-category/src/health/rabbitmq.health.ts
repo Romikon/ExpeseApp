@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { HealthIndicator, HealthIndicatorResult } from '@nestjs/terminus';
-import config from '../config/config'
+import { Config } from '../config/config'
 import * as amqp from 'amqplib';
 
 @Injectable()
@@ -9,7 +9,7 @@ export class RabbitMQHealthIndicator extends HealthIndicator {
 
   constructor() {
     super();
-    this.connectionUrl = config.rabbitMQUrl;
+    this.connectionUrl = Config().rabbitMQUrl;
   }
 
   async isHealthy(): Promise<HealthIndicatorResult> {

@@ -3,7 +3,9 @@ import { TransactionService } from './transaction.service';
 import { PaginationDto, CreateTransactionDto, GetTransactionDto, UpdateTransactionDto } from '../dto/dto';
 import { DeleteResult } from 'typeorm';
 import { LoggerInterceptor } from '../logger/logger';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Transaction')
 @Controller('transactions')
 @UseInterceptors(LoggerInterceptor)
 export class TransactionController {

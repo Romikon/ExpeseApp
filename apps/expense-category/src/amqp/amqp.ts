@@ -1,6 +1,6 @@
 import * as amqp from 'amqplib';
 import { CategoryService } from '../category/category.service';
-import config from '../config/config'
+import { Config } from '../config/config'
 import { CategoryFromRabbitMQDto } from '../dto/dto';
 import { Injectable, OnModuleInit } from '@nestjs/common';
 
@@ -8,8 +8,8 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 export class CloudAMQP implements OnModuleInit{
     private connection: amqp.Connection;
     private channel: amqp.Channel;
-    private readonly queue = config.rabbitMQQueue;
-    private readonly rabbitmqUrl = config.rabbitMQUrl;
+    private readonly queue = Config().rabbitMQQueue;
+    private readonly rabbitmqUrl = Config().rabbitMQUrl;
 
     constructor(
         private categoryService: CategoryService
