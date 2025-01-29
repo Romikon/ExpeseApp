@@ -43,6 +43,7 @@ export class TransactionService {
     transactionExist.type = type;
     transactionExist.sum = sum;
     transactionExist.activity = activity;
+    
     return this.transactionReposetory.save(transactionExist)
 
   }

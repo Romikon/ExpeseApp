@@ -18,6 +18,7 @@ export class UserService {
 
       return this.userRepository.find({ skip: (page - 1) * size, take: size });
     }
+
     return this.userRepository.find();
   }
 
@@ -37,6 +38,7 @@ export class UserService {
     userExist.name = name;
     userExist.email = email;
     userExist.password = password;
+    
     return this.userRepository.save(userExist);
   }
 

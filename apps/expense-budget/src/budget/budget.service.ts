@@ -39,7 +39,6 @@ export class BudgetService {
     budgetExist.name = name;
     budgetExist.currency = currency
     return this.budgetRepository.save(budgetExist)
-    
   }
 
   deleteBudet(id: number): Promise<DeleteResult>{

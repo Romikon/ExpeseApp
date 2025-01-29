@@ -51,6 +51,7 @@ export class CategoryService {
     categoryExist.name = name;
     categoryExist.type = type;
     categoryExist.description = description;
+    
     return this.categoryReposetory.save(categoryExist)
   }
 
