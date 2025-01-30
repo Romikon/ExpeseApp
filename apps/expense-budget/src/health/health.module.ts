@@ -6,10 +6,7 @@ import { HealthService } from './health.service';
 import { Config } from '../config/config';
 
 @Module({
-  imports: [
-    TerminusModule,
-    TypeOrmModule.forRoot(Config().typeOrmConfig),
-  ],
+  imports: [TerminusModule, TypeOrmModule.forRoot(Config().typeOrmConfig)],
   controllers: [HealthController],
   providers: [HealthService],
 })

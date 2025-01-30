@@ -1,8 +1,8 @@
 import { Entity, Column } from 'typeorm';
-import { BaseEntity } from "@app/common-entity"
+import { BaseEntity } from '@app/common-entity';
 
 @Entity({ schema: 'budget', name: 'budget' })
-export class BudgetEntity extends BaseEntity{
+export class BudgetEntity extends BaseEntity {
   @Column({ nullable: true })
   name: string;
 

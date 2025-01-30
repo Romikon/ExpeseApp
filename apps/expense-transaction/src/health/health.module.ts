@@ -7,10 +7,7 @@ import { Config } from '../config/config';
 import { RabbitMQHealthIndicator } from './rabbitmq.health';
 
 @Module({
-  imports: [
-    TerminusModule,
-    TypeOrmModule.forRoot(Config().typeOrmConfig),
-  ],
+  imports: [TerminusModule, TypeOrmModule.forRoot(Config().typeOrmConfig)],
   controllers: [HealthController],
   providers: [HealthService, RabbitMQHealthIndicator],
 })

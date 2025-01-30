@@ -1,6 +1,21 @@
-import { Controller, Get, Post, Body, Param, Put, Delete, Query, UseInterceptors } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Put,
+  Delete,
+  Query,
+  UseInterceptors,
+} from '@nestjs/common';
 import { UserService } from './user.service';
-import { PaginationDto, CreateUserDto, GetUserDto, UpdateUserDto } from '../dto/index';
+import {
+  PaginationDto,
+  CreateUserDto,
+  GetUserDto,
+  UpdateUserDto,
+} from '../dto/index';
 import { DeleteResult } from 'typeorm';
 import { LoggerInterceptor } from '../logger/logger';
 import { ApiTags } from '@nestjs/swagger';
@@ -22,12 +37,15 @@ export class UserController {
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto): Promise<UpdateUserDto> {
+  update(
+    @Param('id') id: number,
+    @Body() updateUserDto: UpdateUserDto,
+  ): Promise<UpdateUserDto> {
     return this.userService.updateUser(id, updateUserDto);
   }
 
   @Delete(':id')
-  dalelteUser(@Param('id') id: number): Promise<DeleteResult>{
+  dalelteUser(@Param('id') id: number): Promise<DeleteResult> {
     return this.userService.deleteUser(id);
   }
 }

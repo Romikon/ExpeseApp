@@ -1,7 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, Column } from 'typeorm';
 import { BaseEntity } from '@app/common-entity';
 @Entity({ schema: 'category', name: 'category' })
-export class CategoryEntity extends BaseEntity{
+export class CategoryEntity extends BaseEntity {
   @Column({ type: 'varchar', length: 255 })
   name: string;
 

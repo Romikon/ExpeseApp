@@ -7,7 +7,8 @@ import { LoggerModule } from 'nestjs-pino';
 import { HealthModule } from './health/health.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(dataSourceOptions),
+  imports: [
+    TypeOrmModule.forRoot(dataSourceOptions),
     UserModule,
     HealthModule,
     LoggerModule.forRoot({
@@ -19,7 +20,7 @@ import { HealthModule } from './health/health.module';
           },
         },
       },
-    })
+    }),
   ],
   controllers: [],
   providers: [DatabaseService],

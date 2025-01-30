@@ -18,7 +18,7 @@ import { HealthModule } from './health/health.module';
           },
         },
       },
-    })
+    }),
   ],
   controllers: [],
   providers: [DatabaseService, RabbitMQService],
