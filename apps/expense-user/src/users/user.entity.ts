@@ -1,13 +1,13 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 import { BaseEntity } from '@app/common-entity';
 @Entity({ schema: 'users', name: 'users' })
 export class UserEntity extends BaseEntity{
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ nullable: true })
   name: string;
 
-  @Column({ type: 'varchar', length: 255, unique: true })
+  @Column({ nullable: true, unique: true })
   email: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ nullable: true })
   password: string;
 }
