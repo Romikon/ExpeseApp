@@ -19,9 +19,7 @@ async function bootstrap() {
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
   await app.listen(Config().port);
-  console.log(
-    `NestJS app running on http://${Config().dbHost}:${Config().port}`,
-  );
+  console.log(`NestJS app running on http://${Config().dbHost}:${Config().port}`);
 }
 
 bootstrap();

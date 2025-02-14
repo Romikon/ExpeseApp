@@ -17,7 +17,7 @@ import {
   UpdateTransactionDto,
 } from '../dto/index';
 import { DeleteResult } from 'typeorm';
-import { LoggerInterceptor } from '../logger/logger';
+import { LoggerInterceptor } from '../interceptors/logger.interceptor';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Transaction')

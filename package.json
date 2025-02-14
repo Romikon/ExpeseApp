@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "expenseapp",
   "version": "1.0.0",
   "description": "<p align=\"center\">   <a href=\"http://nestjs.com/\" target=\"blank\"><img src=\"https://nestjs.com/img/logo-small.svg\" width=\"120\" alt=\"Nest Logo\" /></a> </p>",
@@ -27,18 +28,44 @@
     "migration:show:budget": "nest migration:show expense-budget",
     "migration:show:category": "nest migration:show expense-category",
     "migration:show:transaction": "nest migration:show expense-transaction",
-    "migration:show:all": "concurrently \"npm run migration:show:user\" \"npm run migration:show:budget\" \"npm run migration:show:category\" \"npm run migration:show:transaction\""
+    "migration:show:all": "concurrently \"npm run migration:show:user\" \"npm run migration:show:budget\" \"npm run migration:show:category\" \"npm run migration:show:transaction\"",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^9.1.2"
+    "@eslint/js": "^9.19.0",
+    "@typescript-eslint/eslint-plugin": "^8.24.0",
+    "@typescript-eslint/parser": "^8.24.0",
+    "babel-eslint": "^10.1.0",
+    "concurrently": "^9.1.2",
+    "eslint": "^9.20.1",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-decorator-position": "^6.0.0",
+    "eslint-plugin-prettier": "^5.2.3",
+    "globals": "^15.14.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^15.4.3",
+    "prettier": "^3.5.1",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.22.0"
   },
   "dependencies": {
     "@nestjs/config": "^3.3.0",
     "pg": "^8.13.1",
     "reflect-metadata": "^0.2.2",
     "typeorm": "^0.3.20"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   }
 }
