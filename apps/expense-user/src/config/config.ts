@@ -15,6 +15,7 @@ export const Config = () => {
     dbPort: process.env.DB_PORT,
     dbSchema: process.env.DB_SCHEMA,
     Host: process.env.HOST,
+    secretKey: process.env.JWT_SECRET,
     typeOrmConfig: {
       type: 'postgres',
       host: process.env.DB_HOST,

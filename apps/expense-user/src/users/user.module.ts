@@ -12,5 +12,6 @@ import { Config } from '../config/config';
   ],
   controllers: [UserController],
   providers: [UserService],
+  exports: [UserService],
 })
 export class UserModule {}

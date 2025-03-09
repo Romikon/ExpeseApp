@@ -16,10 +16,15 @@ export class UserService {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  async getUsers(paginationDto: PaginationDto): Promise<GetUserDto[]> {
+  async getUser(email: string) {
+    console.log(email);
+    return this.userRepository.findOne({ where: { email: email }})
+  }
+
+  async getUsers(paginationDto?: PaginationDto): Promise<GetUserDto[]> {
     const { page, size } = paginationDto;
     //check if request contain pagination then return with pagination statement
-    if (!page && !size) {
+    if (page && size) {
       return this.userRepository.find({ skip: (page - 1) * size, take: size });
     }
 
@@ -28,6 +33,8 @@ export class UserService {
 
   async createUser(createUserDto: CreateUserDto): Promise<CreateUserDto> {
     const { name, email, password } = createUserDto;
+
+    if (await this.getUser(email)) throw new Error('User already exist!')
 
     return this.userRepository.save(
       this.userRepository.create({ name, email, password }),
