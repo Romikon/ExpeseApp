@@ -5,6 +5,7 @@ import { LoggerModule } from 'nestjs-pino';
 import { ConfigModule } from '@nestjs/config';
 import { Config } from '../src/config/config';
 import { HealthModule } from './health/health.module';
+import { BalanceModule } from './balance/balance.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { HealthModule } from './health/health.module';
     }),
     BudgetModule,
     HealthModule,
+    BalanceModule,
     LoggerModule.forRoot({
       pinoHttp: {
         transport: {

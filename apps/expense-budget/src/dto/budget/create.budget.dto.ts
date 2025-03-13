@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateBudgetDto {
   @ApiProperty({
-    example: 'My budget>',
+    example: 'My budget',
     required: true,
   })
   @IsString()

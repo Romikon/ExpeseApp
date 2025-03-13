@@ -2,6 +2,7 @@ import * as dotenv from 'dotenv';
 import { join } from 'path';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { BudgetEntity } from '../budget/budget.entity';
+import { BalanceEntity } from '../balance/balance.entity';
 
 dotenv.config({ path: join(__dirname, '../../../config/budget/.env') });
 
@@ -15,6 +16,8 @@ export const Config = () => {
     dbPort: process.env.DB_PORT,
     dbSchema: process.env.DB_SCHEMA,
     Host: process.env.HOST,
+    defaultUser: parseInt(process.env.DEFAULT_USER),
+    defaultAmount: parseInt(process.env.DEFAUL_AMOUNT),
     typeOrmConfig: {
       type: 'postgres',
       host: process.env.DB_HOST,
@@ -22,7 +25,7 @@ export const Config = () => {
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      entities: [BudgetEntity],
+      entities: [BudgetEntity, BalanceEntity],
       synchronize: true,
     } as TypeOrmModuleOptions,
   };

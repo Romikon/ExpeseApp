@@ -4,9 +4,11 @@ import { BudgetEntity } from './budget.entity';
 import { BudgetService } from './budget.service';
 import { BudgetController } from './budget.controller';
 import { Config } from '../config/config';
+import { BalanceModule } from '../balance/balance.module';
 
 @Module({
   imports: [
+    BalanceModule,
     TypeOrmModule.forRoot(Config().typeOrmConfig),
     TypeOrmModule.forFeature([BudgetEntity]),
   ],
