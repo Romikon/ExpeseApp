@@ -15,13 +15,20 @@ export class DatabaseService implements OnApplicationShutdown {
     try {
       await this.dataSource.initialize();
     } catch (error) {
-      console.error('Error during PostgreSQL connection initialization:', error);
+      console.error(
+        'Error during PostgreSQL connection initialization:',
+        error,
+      );
     }
   }
 
   async onApplicationShutdown() {
-    console.log('[Shutdown]: Shutting down PostgreSQL connection in Transaction service');
+    console.log(
+      '[Shutdown]: Shutting down PostgreSQL connection in Transaction service',
+    );
     await this.dataSource.destroy();
-    console.log('[Shutdown]: PostgreSQL connection closed in Transaction service');
+    console.log(
+      '[Shutdown]: PostgreSQL connection closed in Transaction service',
+    );
   }
 }

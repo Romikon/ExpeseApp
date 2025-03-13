@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { HealthIndicator, HealthIndicatorResult } from '@nestjs/terminus';
-import { Config } from '../config/config'
+import { Config } from '../config/config';
 import * as amqp from 'amqplib';
 
 @Injectable()

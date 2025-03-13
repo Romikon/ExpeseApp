@@ -14,7 +14,9 @@ export class RabbitMQService implements OnApplicationShutdown {
   private client: ClientProxy;
 
   async onApplicationShutdown() {
-    console.log('[Shutdown]: Shutting down RabbitMQ connection in Category service');
+    console.log(
+      '[Shutdown]: Shutting down RabbitMQ connection in Category service',
+    );
     await this.client.close();
     console.log('[Shutdown]: RabbitMQ connection closed in Category service');
   }

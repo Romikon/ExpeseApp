@@ -9,7 +9,7 @@ import { Config } from '../config/config';
 @Module({
   imports: [
     TypeOrmModule.forRoot(Config().typeOrmConfig),
-  TypeOrmModule.forFeature([TransactionEntity]),
+    TypeOrmModule.forFeature([TransactionEntity]),
   ],
   controllers: [TransactionController],
   providers: [TransactionService, CloudAMQP],
